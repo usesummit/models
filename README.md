@@ -5,6 +5,8 @@ This repo hosts applications built using Summit Event Language (SEL), which can 
 
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
+If you're wondering why SEL exists at all, this page does a good job of explaining: https://summit.readme.io/docs/what-it-is-why
+
 ## How it works
 What you see in Summit when you build an host an app is an interface to create and connect events, define their recurring patterns, and insert SEL expressions to run when they execute.
 
