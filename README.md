@@ -6,11 +6,11 @@ This repo hosts applications built using Summit Event Language (SEL), which can 
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
 ## How it works
-When hosted in Summit, these apps expose a subset of the language to define the actions that occur when events are triggered.  These are referred to as SEL expressions.
+What you see in Summit when you build an host an app is an interface to create and connect events, define their recurring patterns, and insert SEL expressions to run when they execute.
 
 The documentation for SEL expressions (event types, conditionals, constants, etc.) can be found at https://summit.readme.io/docs.
 
-Since much of the work to wrap and define an application is handled on usesummit.com as part of the IDE, the text-based version of SEL (.sel) has its own set of rules and syntax that should be used to create a working application.  Namely:
+Since much of the work to wrap and define an application is handled on usesummit.com as part of the IDE, the text-based version of SEL (.sel) has an expanded set of rules and syntax that must be explicitly declared in order to create a working application.  Namely:
 
 - Events may be declared/created using the event title in double quotes `"` followed by a `:` and then a SEL expression.
 - Events may be connected through routes drawn using `->`.
@@ -34,6 +34,8 @@ Example:
 # Create a metric.
 % "Ratio Metric": event_title_a / event_title_b
 ```
+
+When uploaded to Summit, this will be turned into an application that produces and displays the values 1, 3, and 0.333...
 
 ## Limitations
 Some features of the language are not yet supported in `.sel` notation.  Namely:
