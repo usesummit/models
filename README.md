@@ -1,7 +1,7 @@
 # Summit Apps
 
 ## Background
-This repo hosts applications built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into an open-source language and interpreter.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and it opens up opportunities for AI to contribute.
+This repo hosts applications built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into an open-source language and interpreter.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
