@@ -47,5 +47,7 @@ Some features of the language are not yet supported in `.sel` notation.  Namely:
 - Recurring patterns, both common (ex. monthly) and custom (cron syntax).
 - Adjusting what ledger values appear in the output table / response.
 
-  
+## How to help
+
+We are still very much in the alpha phase.  The most useful things at the moment are questions that help us figure out your interests and the future of SEL.  If you have one, let us know!
 
