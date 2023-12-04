@@ -1,0 +1,113 @@
+
+# --- EMAIL ---
+
+"Email Input": =String("tim@apple.com"<email>)
+"Email Format Score": =Matches(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+"B2C Email Domains": =Matches(r"@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|aol\.com|icloud\.com|mail\.com|protonmail\.com|zoho\.com|gmx\.(com|net)|yandex\.com|qq\.com|naver\.com|libero\.it|orange\.(fr|com))\b")
+
+"Email Input" -> "Email Format Score"
+"Email Input" -> "B2C Email Domains"
+
+% "Business Email Score": 1 - b2c_email_domains
+% "Email Score": (1 - b2c_email_domains) * email_format_score
+
+# --- INDUSTRY ---
+
+"Industry": =String("Software & Technology"<industry>)
+"Industry Match": =Matches("Technology"<icp_industry>)
+
+"Industry" -> "Industry Match"
+
+% "Industry Score": iif(industry_match >= 1, 1, 0)
+
+# --- EMPLOYEES ---
+
+"Employees Range": =String("50000+"<employees_range>)
+"Employees": =Matches(r"(\d{1,})")
+"Employees Median": =T('median')
+"Employees Count": =Pool(0)
+"Employees Fixed Count": =Pool("50"<employees_range>)
+"Employees Count Score": =(2.7182818284 ** (-0.5 * ((!'Employees Count' - 50000<icp_employees>) ** 2) / ((50000<icp_employees> * 0.5) ** 2)))
+
+"Employees Fixed Count" -> "Employees Count"
+"Employees Range" -> "Employees" -> "Employees Median" -> "Employees Count" -> "Employees Count Score"
+
+# --- REVENUE ---
+
+"Estimated Revenue": =String("$1M-$5M"<estimated_revenue>)
+
+"Revenue Match Millions": =Matches(r"(\d{1,3})[Mm]")
+"Revenue Match Billions": =Matches(r"(\d{1,3})[Bb]")
+"Revenue Match Thousands": =Matches(r"(\d{1,3})[Kk]")
+
+"Median Thousands": =T('median')
+"Median Millions": =T('median')
+"Median Billions": =T('median')
+
+"Revenue K to M": / 1000
+"Revenue B to M": * 1000
+
+"Revenue Number": =Pool(0)
+"Revenue Score": =(2.7182818284 ** (-0.5 * ((!'Revenue Number' - 5<icp_revenue>) ** 2) / ((5<icp_revenue> * 0.5) ** 2)))
+
+"Estimated Revenue" -> "Revenue Match Thousands" -> "Median Thousands" -> "Revenue K to M" -> "Revenue Number"
+"Estimated Revenue" -> "Revenue Match Millions" -> "Median Millions" -> "Revenue Number"
+"Estimated Revenue" -> "Revenue Match Billions" -> "Median Billions" -> "Revenue B to M" -> "Revenue Number"
+"Revenue Number" -> "Revenue Score"
+
+# --- FUNDING ---
+
+"Estimated Funding": =String("$1M-$5M"<estimated_funding>)
+
+"Funding Match Millions": =Matches(r"(\d{1,3})[Mm]")
+"Funding Match Billions": =Matches(r"(\d{1,3})[Bb]")
+"Funding Match Thousands": =Matches(r"(\d{1,3})[Kk]")
+
+"Median Thousands Funding": =T('median')
+"Median Millions Funding": =T('median')
+"Median Billions Funding": =T('median')
+
+"Funding B to M": * 1000
+"Funding K to M": / 1000
+
+"Funding Number": =Pool(0)
+"Funding Score": =(2.7182818284 ** (-0.5 * ((!'Funding Number' - 5<icp_funding>) ** 2) / ((5<icp_funding> * 0.5) ** 2)))
+
+"Estimated Funding" -> "Funding Match Thousands" -> "Median Thousands Funding" -> "Funding K to M" -> "Funding Number"
+"Estimated Funding" -> "Funding Match Millions" -> "Median Millions Funding" -> "Funding Number"
+"Estimated Funding" -> "Funding Match Billions" -> "Median Billions Funding" -> "Funding B to M" -> "Funding Number" 
+"Funding Number" -> "Funding Score"
+
+# --- ROLE ---
+"Job Title": =String("CEO"<job_title>)
+
+"Max Title Match": =Matches(r"C[EIPOMR]O")
+"Title Score": =1
+
+"Job Match": =Matches("VP"<icp_org_level>)
+"Job Match Score": =0.5
+
+"Dept Match": =Matches("Marketing"<icp_dept>)
+"Dept Match Score": =0.5
+
+"Role Score": =Pool(0)
+
+"Job Title" -> "Max Title Match" -> "Title Score" -> "Role Score"
+"Job Title" -> "Job Match" -> "Job Match Score" -> "Role Score"
+"Job Title" -> "Dept Match" -> "Dept Match Score" -> "Role Score"
+
+# --- GEOGRAPHY ---
+
+"Default Location Score": =1
+"Distance (Mi.)": =Distance("San Francisco, CA"<icp_geo>, "Cupertino, CA"<contact_geo>)
+"Location Score": =(2.7182818284 ** (-0.5 * ((!'Geo Distance (Mi.)') / (100<icp_distance> * 0.5)) ** 2))
+
+"Factor Boost": =1 # addtnl factor
+"Score Factors": =Pool(6)
+
+"Distance (Mi.)" -> "Location Score"
+"Location Score" -> "Factor Boost" -> "Score Factors"
+
+
+# METRIC
+% ceil(round(((email_score + revenue_score + role_score + employee_count_score + geo_score + funding_score + industry_score) / score_factors) * 100)/20)
