@@ -1,12 +1,12 @@
-# apps
+# Summit Apps
 
-Applications built using Summit Event Language (SEL), which can be uploaded/imported to usesummit.com.
+This repo hosts applications built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into an open-source language and interpreter.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step.
 
-Apps in Summit use a subset of the language to define the actions that occur when events are triggered.
+When hosted in Summit, these apps expose a subset of the language to define the actions that occur when events are triggered.  These are referred to as SEL expressions.
 
-The documentation for this subset can be found at https://summit.readme.io/docs.
+The documentation for SEL expressions (event types, conditionals, constants, etc.) can be found at https://summit.readme.io/docs.
 
-The features of the language used in these files which are not yet found at usesummit.com:
+Since much of the work to wrap and define an application is handled on usesummit.com as part of the IDE, the text-based version of SEL (.sel) has its own set of rules and syntax that should be used to create a working application.  Namely:
 
 - Events may be declared/created using the event title in double quotes `"` followed by a `:` and then a SEL expression.
 - Events may be connected through routes drawn using `->`.
@@ -31,4 +31,10 @@ Example:
 % "Ratio Metric": event_title_a / event_title_b
 ```
 
+Some features of the language are not yet supported in `.sel` notation.  Namely:
+
+- Recurring patterns, both common (ex. monthly) and custom (cron syntax).
+- Adjusting what ledger values appear in the output table / response.
+
+  
 
