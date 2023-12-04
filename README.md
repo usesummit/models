@@ -3,6 +3,8 @@
 ## Background
 This repo hosts applications built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into an open-source language and interpreter.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
+Our short-term plan is to still require use of the interpreter we host at usesummit.com.
+
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
 If you're wondering why SEL exists at all, this page does a good job of explaining: https://summit.readme.io/docs/what-it-is-why
