@@ -1,0 +1,61 @@
+#!/usesummit/sel/0.1a
+
+"Seconds Now": =Time('now')
+
+# Website
+"Max Days Visits": =60<max_days_visits>
+
+# Email
+"Max Days Opens": =30<max_days_opens>
+"Max Days Clicks": =60<max_days_clicks>
+"Max Days Replies": =90<max_days_replies>
+
+# ---
+
+"Web Sessions": =4<web_sessions>
+"Last Visited At": =1701651667<last_visited_at>
+
+% "Visits Score": (1 - exp(-web_sessions / 10)) * exp(-(seconds_now-last_visited_at)/ 86400 * -log(0.01) / (max_days_visits * log(web_sessions + 1)))
+
+
+# ---
+
+"Pricing Page Visits": =1<pricing_page_visits> * 2<pricing_page_weight>
+"Last Visited Pricing At": =1701651667<last_visited_pricing_at>
+
+% "Pricing Page Score": (1 - exp(-pricing_page_visits / 10)) * exp(-(seconds_now-last_visited_pricing_at)/ 86400 * -log(0.01) / (max_days_visits * log(pricing_page_visits + 1)))
+
+
+# ---
+
+"Sign Up Page Visits": =1<signup_page_visits> * 3<signup_page_weight>
+"Last Visited Sign Up At": =1701651667<last_signup_at>
+
+% "Sign Up Page Score": (1 - exp(-sign_up_page_visits / 10)) * exp(-(seconds_now-last_visited_sign_up_at)/ 86400 * -log(0.01) / (max_days_visits * log(sign_up_page_visits + 1)))
+
+
+# ---
+
+"Email Opens": =1<email_opens> * 1<email_opened_weight>
+"Last Email Opened At": =1701651667<last_email_opened_at>
+
+% "Email Opens Score": (1 - exp(-email_opens / 10)) * exp(-(seconds_now-last_email_opened_at)/ 86400 * -log(0.01) / (max_days_opens * log(email_opens + 1)))
+
+# ---
+
+"Email Clicks": =1<email_clicks> * 2<email_clicked_weight>
+"Last Email Clicked At": =1701651667<last_email_clicked_at>
+
+% "Email Clicks Score": (1 - exp(-email_clicks / 10)) * exp(-(seconds_now-last_email_clicked_at)/ 86400 * -log(0.01) / (max_days_clicks * log(email_clicks + 1)))
+
+# ---
+
+"Email Replies": =1<email_replies> * 2<email_replied_weight>
+"Last Email Replied At": =1701651667<last_email_replied_at>
+
+% "Email Replies Score": (1 - exp(-email_replies / 10)) * exp(-(seconds_now-last_email_replied_at)/ 86400 * -log(0.01) / (max_days_replies * log(email_replies + 1)))
+
+# ---
+
+% "Intent Score": FLOOR(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5) + (CEIL(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5) - 
+FLOOR(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5)) * 0.5
