@@ -111,4 +111,4 @@
 
 
 # METRIC
-% "Lead Score": ceil(round(((email_score + revenue_score + role_score + employee_count_score + geo_score + funding_score + industry_score) / score_factors) * 100)/20)
+% "Lead Score": ceil(round(((email_score + revenue_score + role_score + employees_count_score + location_score + funding_score + industry_score) / score_factors) * 100)/20)
