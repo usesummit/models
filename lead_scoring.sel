@@ -101,14 +101,15 @@
 
 "Default Location Score": =1
 "Distance (Mi.)": =Distance("San Francisco, CA"<icp_geo>, "Cupertino, CA"<contact_geo>)
-"Location Score": =(2.7182818284 ** (-0.5 * ((!'Geo Distance (Mi.)') / (100<icp_distance> * 0.5)) ** 2))
+"Calculated Location Score": =(2.7182818284 ** (-0.5 * ((!'Distance (Mi.)') / (100<icp_distance> * 0.5)) ** 2))
 
 "Factor Boost": =1 # addtnl factor
 "Score Factors": =Pool(6)
 
-"Distance (Mi.)" -> "Location Score"
-"Location Score" -> "Factor Boost" -> "Score Factors"
+"Distance (Mi.)" -> "Calculated Location Score"
+"Calculated Location Score" -> "Factor Boost" -> "Score Factors"
 
+% "Location Score": iif(calculated_location_score, calculated_location_score, default_location_score)
 
 # METRIC
 % "Lead Score": ceil(round(((email_score + revenue_score + role_score + employees_count_score + location_score + funding_score + industry_score) / score_factors) * 100)/20)
