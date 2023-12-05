@@ -57,5 +57,4 @@
 
 # ---
 
-% "Intent Score": FLOOR(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5) + (CEIL(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5) - 
-FLOOR(MAX(web_sessions_score, pricing_page_score, sign_up_page_score) * 5)) * 0.5
+% "Intent Score": FLOOR(MAX(visits_score, pricing_page_score, sign_up_page_score) * 5) + (CEIL(MAX(visits_score, pricing_page_score, sign_up_page_score) * 5) - FLOOR(MAX(visits_score, pricing_page_score, sign_up_page_score) * 5)) * 0.5
