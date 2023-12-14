@@ -2,19 +2,14 @@
 
 # --- EMAIL ---
 
-"Email Input": =String("tim@apple.com"<email>)
-"Email Format Score": =Matches(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
-"B2C Email Domains": =Matches(r"@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|aol\.com|icloud\.com|mail\.com|protonmail\.com|zoho\.com|gmx\.(com|net)|yandex\.com|qq\.com|naver\.com|libero\.it|orange\.(fr|com))\b")
+"Email Format Score": =1<is_email_valid>
+"Business Email Score": =1<is_b2b_email>
 
-"Email Input" -> "Email Format Score"
-"Email Input" -> "B2C Email Domains"
-
-% "Business Email Score": 1 - b2c_email_domains
-% "Email Score": (1 - b2c_email_domains) * email_format_score
+% "Email Score": email_domain_score * email_format_score
 
 # --- INDUSTRY ---
 
-"Industry": =String("Software & Technology"<industry>)
+"Industry": =String("Software & Technology"<company_category_industry>)
 "Industry Match": =Matches("Technology"<icp_industry>)
 
 "Industry" -> "Industry Match"
@@ -23,11 +18,11 @@
 
 # --- EMPLOYEES ---
 
-"Employees Range": =String("50000+"<employees_range>)
+"Employees Range": =String("50000+"<company_metrics_employees_range>)
 "Employees": =Matches(r"(\d{1,})")
 "Employees Median": =T('median')
 "Employees Count": =Pool(0)
-"Employees Fixed Count": =Pool("50"<employees_range>)
+"Employees Fixed Count": =Pool("50"<company_metrics_employees>)
 "Employees Count Score": =(2.7182818284 ** (-0.5 * ((!'Employees Count' - 50000<icp_employees>) ** 2) / ((50000<icp_employees> * 0.5) ** 2)))
 
 "Employees Fixed Count" -> "Employees Count"
@@ -35,7 +30,7 @@
 
 # --- REVENUE ---
 
-"Estimated Revenue": =String("$1M-$5M"<estimated_revenue>)
+"Estimated Revenue": =String("$1M-$5M"<company_metrics_estimated_annual_revenue>)
 
 "Revenue Match Millions": =Matches(r"(\d{1,3})[Mm]")
 "Revenue Match Billions": =Matches(r"(\d{1,3})[Bb]")
@@ -80,7 +75,7 @@
 "Funding Number" -> "Funding Score"
 
 # --- ROLE ---
-"Job Title": =String("CEO"<job_title>)
+"Job Title": =String("CEO"<employment_role>)
 
 "Max Title Match": =Matches(r"C[EIPOMR]O")
 "Title Score": =1
@@ -100,7 +95,7 @@
 # --- GEOGRAPHY ---
 
 "Default Location Score": =1
-"Distance (Mi.)": =Distance("San Francisco, CA"<icp_geo>, "Cupertino, CA"<contact_geo>)
+"Distance (Mi.)": =Distance("San Francisco, CA"<icp_geo>, "Cupertino, CA"<geo_city>)
 "Calculated Location Score": =(2.7182818284 ** (-0.5 * ((!'Distance (Mi.)') / (100<icp_distance> * 0.5)) ** 2))
 
 "Factor Boost": =1 # addtnl factor
