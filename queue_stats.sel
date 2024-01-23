@@ -1,1 +1,28 @@
+# Fetch data.
+"Queue": =Request('get', ''<queue_csv>)
 
+# Select columns from data.
+"A Values": =Parser("$.rows[*].['Submitted At'<timestamp_a>]")
+"B Values": =Parser("$.rows[*].['Assigned At'<timestamp_b>]")
+
+# Filter data to remove any null values.
+"A Filtered": =T('numbers')
+"B Filtered": =T('numbers')
+
+# Count the filtered values.
+"A Count": =T('count')
+"B Count": =T('count')
+
+# Flip the sign of column A.
+"Subtraction List": * -1
+
+# To do the matrix math of summing the columns.
+"Total Wait": =Pool()
+
+# Analytics
+"Min Wait": =T('min')
+"Max Wait": =T('max')
+"Median Wait": =T('median')
+"Average Wait": =T('mean')
+"Standard Deviation": =T('stddev')
+"Skewness": =T('skewness')
