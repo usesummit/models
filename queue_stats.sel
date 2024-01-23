@@ -32,7 +32,7 @@
 
 # Fetch data for table, extract values, filter numbers (remove nulls), count the length of the list.
 "Queue" -> "A Values" -> "A Filtered" -> "A Count"
-"Queue" -> B Values" -> "B Filtered" -> "B Count"
+"Queue" -> "B Values" -> "B Filtered" -> "B Count"
 
 # Flip the sign on values in column A, send list of values to total wait pool.
 "A Values" -> "Subtraction List" -> "Total Wait"
