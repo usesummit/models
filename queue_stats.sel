@@ -1,28 +1,49 @@
-# Fetch data.
+# To fetch data.
 "Queue": =Request('get', ''<queue_csv>)
 
-# Select columns from data.
-"A Values": =Parser("$.rows[*].['Submitted At'<timestamp_a>]")
-"B Values": =Parser("$.rows[*].['Assigned At'<timestamp_b>]")
+# To select columns from data.
+"A Values": =Parser("$.rows[*].['Started At'<timestamp_a>]")
+"B Values": =Parser("$.rows[*].['Completed At'<timestamp_b>]")
 
-# Filter data to remove any null values.
+# To filter data to remove any null values.
 "A Filtered": =T('numbers')
 "B Filtered": =T('numbers')
 
-# Count the filtered values.
+# To count the filtered values.
 "A Count": =T('count')
 "B Count": =T('count')
 
-# Flip the sign of column A.
+# To flip the sign of column A.
 "Subtraction List": * -1
 
 # To do the matrix math of summing the columns.
+# Since column A is sign-flipped, this becomes a delta.
 "Total Wait": =Pool()
 
-# Analytics
+# To pull relevant values from delta.
 "Min Wait": =T('min')
 "Max Wait": =T('max')
 "Median Wait": =T('median')
 "Average Wait": =T('mean')
 "Standard Deviation": =T('stddev')
 "Skewness": =T('skewness')
+
+# Okay, let's do this.
+
+# Fetch data for table, extract values, filter numbers (remove nulls), count the length of the list.
+"Queue" -> "A Values" -> "A Filtered" -> "A Count"
+"Queue" -> B Values" -> "B Filtered" -> "B Count"
+
+# Flip the sign on values in column A, send list of values to total wait pool.
+"A Values" -> "Subtraction List" -> "Total Wait"
+
+# Send list of values in column B to total wait pool.
+"B Values" -> "Total Wait"
+
+# Total wait does matrix addition on columns and sends result (sum) list to stat functions.
+"Total Wait" -> "Min Wait"
+"Total Wait" -> "Max Wait"
+"Total Wait" -> "Median Wait"
+"Total Wait" -> "Average Wait"
+"Total Wait" -> "Standard Deviation"
+"Total Wait" -> "Skewness"
