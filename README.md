@@ -1,7 +1,7 @@
-# Summit Apps
+# Summit Models
 
 ## Background
-This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into an open-source language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
+This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
 Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these applications.
 
@@ -44,8 +44,8 @@ When uploaded to Summit, this will be turned into an application that produces a
 ## Limitations
 Some features of the language are not yet supported in `.sel` notation.  Namely:
 
-- Recurring patterns, both common (ex. monthly) and custom (cron syntax).
-- Adjusting what ledger values appear in the output table / response.
+- To have event recur, you must use an `Every()` event (no direct setting on individual events.
+- Choosing what measurement values ought to appear by default for an event in the output table.
 
 ## How to help
 
