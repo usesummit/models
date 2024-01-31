@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+
+# This model takes into account hours of operation, duration of work required, and the timing of a ticket to output a projected resolution date.
+# One key input is whether the office/support desk is open when the ticket is submitted initially.  
+# This can be sourced from another model or from an external data source.
+# This makes the assumption that a ticket SLA begins immediately if the office is open.
+
+"Ticket Submitted": =Wait("2024-02-02 16:19:00"<ticket_submitted_at>)
+"Office Status": =1<is_open>  # Ignore the ticket being submitted unless the office is open when it is.
+"Actively Working Elapsed Time": =Stopwatch(60 * 60 * 3<turnaround_sla>)
+
+"Operations": =Every("0 8,17 * * 1-5"<hours_of_operation>)  # Using cron syntax to mark open time (8am) and closing time (5pm), M-F (1-5)
+"Until Ticket Created": =Block("2024-02-02 16:19:00"<ticket_submitted_at>)  # Ignore open/closing events until the ticket is created.
+
+"Ticket Submitted" -> "Office Status" -> "Actively Working Elapsed Time"
+"Operations" -> "Until Ticket Created" -> "Actively Working Elapsed Time"
+
