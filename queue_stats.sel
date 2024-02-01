@@ -18,7 +18,7 @@
 "Completed Count": =Query("SELECT (completed_at - submitted_at)/3600 FROM $table WHERE completed_at IS NOT NULL")
 "Times to Completion": =T('cast_ints')
 
-"Standard Deviation": =T('std_dev')
+"Standard Deviation": =T('stddev')
 "Avg Time to Completion (Hours)": =T('mean')
 
 "GSheet" -> "Unassigned Count"
