@@ -1,49 +1,33 @@
-# To fetch data.
-"Queue": =Request('get', ''<queue_csv>)
+#!/usesummit/sel/0.1a
 
-# To select columns from data.
-"A Values": =Parser("$.rows[*].['Started At'<timestamp_a>]")
-"B Values": =Parser("$.rows[*].['Completed At'<timestamp_b>]")
+# By the time you try this, the spreadsheet linked may no longer exist.  Just point at a GSheet that has a header row and update the queries.
 
-# To filter data to remove any null values.
-"A Filtered": =T('numbers')
-"B Filtered": =T('numbers')
+# Turns remote CSV into SQLite db table.
+"GSheet": =Table('https://docs.google.com/spreadsheets/d/e/2PACX-1vSyAinVRYnHM9OQ2JW2cMbx9b7QpDIR9FkmEfvcZmus26ZNNjzfQeLN4LwuWFMwxZrEyP31S7R5t7O6/pub?gid=0&single=true&output=csv'<csv_url>)
 
-# To count the filtered values.
-"A Count": =T('count')
-"B Count": =T('count')
+# We refer to the upstream table as `$table`.
+"Unassigned Count": =Query("SELECT (strftime('%s', 'now') - submitted_at) / 3600 FROM $table WHERE assigned_at IS NULL")
+"Longest Awaiting Assignment": =T('max')
 
-# To flip the sign of column A.
-"Subtraction List": * -1
+"Assigned Count": =Query("SELECT (assigned_at - submitted_at) / 60 FROM $table WHERE assigned_at IS NOT NULL")
+"Times to Assignment": =T('cast_floats')
+"Avg Time to Assignment (Minutes)": =T('mean')
 
-# To do the matrix math of summing the columns.
-# Since column A is sign-flipped, this becomes a delta.
-"Total Wait": =Pool()
+"All Tickets": =Query("SELECT COUNT(*) FROM $table")
 
-# To pull relevant values from delta.
-"Min Wait": =T('min')
-"Max Wait": =T('max')
-"Median Wait": =T('median')
-"Average Wait": =T('mean')
-"Standard Deviation": =T('stddev')
-"Skewness": =T('skewness')
+"Completed Count": =Query("SELECT (completed_at - submitted_at)/3600 FROM $table WHERE completed_at IS NOT NULL")
+"Times to Completion": =T('cast_ints')
 
-# Okay, let's do this.
+"Standard Deviation": =T('std_dev')
+"Avg Time to Completion (Hours)": =T('mean')
 
-# Fetch data for table, extract values, filter numbers (remove nulls), count the length of the list.
-"Queue" -> "A Values" -> "A Filtered" -> "A Count"
-"Queue" -> "B Values" -> "B Filtered" -> "B Count"
+"GSheet" -> "Unassigned Count"
+"GSheet" -> "Assigned Count"
+"GSheet" -> "All Tickets"
+"GSheet" -> "Completed Count"
 
-# Flip the sign on values in column A, send list of values to total wait pool.
-"A Values" -> "Subtraction List" -> "Total Wait"
+"Unassigned Count" -> "Longest Awaiting Assignment"
+"Assigned Count" -> "Times to Assignment" -> "Avg Time to Assignment (Minutes)"
 
-# Send list of values in column B to total wait pool.
-"B Values" -> "Total Wait"
-
-# Total wait does matrix addition on columns and sends result (sum) list to stat functions.
-"Total Wait" -> "Min Wait"
-"Total Wait" -> "Max Wait"
-"Total Wait" -> "Median Wait"
-"Total Wait" -> "Average Wait"
-"Total Wait" -> "Standard Deviation"
-"Total Wait" -> "Skewness"
+"Completed Count" -> "Times to Completion" -> "Standard Deviation"
+"Times to Completion" -> "Avg Time to Completion (Hours)"
