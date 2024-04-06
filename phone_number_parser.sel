@@ -1,0 +1,32 @@
+#!/usesummit/sel/0.1a
+
+# Input Parameters
+
+"Input Country Code": =String("US"<phone_number_country_code>)
+"Input Number": =String("+15124444444"<phone_number>)
+
+# Output (via plugin)
+
+"Is Possible": =String("0"<is_possible>)
+"Is Valid": =String("0"<is_possible>)
+
+"International Formatted": =String(""<phone_intl_formatted>)
+"National Formatted": =String(""<phone_natl_formatted>)
+"E164 Formatted": =String(""<phone_e164_formatted>)
+
+# Define the JSON Response Object
+
+"Possible Attr": =Response("isPossible")
+"Valid Attr": =Response("isValid")
+"Intl Format Attr": =Response("formatted.international")
+"Natl Format Attr": =Response("formatted.national")
+"E164 Format Attr": =Response("formatted.e164")
+
+# Map Plugin Output to JSON Response Object Attributes
+
+"Is Possible" -> "Possible Attr"
+"Is Valid" -> "Valid Attr"
+
+"International Formatted" -> "Intl Format Attr"
+"National Formatted" -> "Natl Format Attr"
+"E164 Formatted" -> "E164 Formatted"
