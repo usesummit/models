@@ -1,17 +1,43 @@
+#!/usesummit/sel/0.1a
 
-
+# Create search query to send to Stripe API.
 "customer_query": =Object({"query": "email:'paul@example.com'<email>"})
+
+# Stripe API call #1 - search customers for this email
 "customer_search": =Request('get', "https://rk_live_yourstripekeyhere:@api.stripe.com/v1/customers/search")
+
+# Parse out the customer ID's from the search results
 "parse_customer_search": =Parser('$.data[0].id')
+
+# Create search query for finding charges with this customer ID
 "charges_query": =Object({"query": "customer:'{{ parse_customer_search }}'"})
+
+# Search charges for this customer ID
 "charges_search": =Request('get', "https://rk_live_yourstripekeyhere:@api.stripe.com/v1/charges/search")
+
+# Data for prompt.
 "summary_data": =Text("""The data to summarize: {% for charge in charges_search.data %} Created: {{ charge.created }} Amount: ${{ charge.amount | divided_by: 100 }} {% endfor %} """)
+
+# Example of how we want the GPT summary to look, stored in spreadsheet for easy editing by ops.
+"example_sheet": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vQpTQwjPoba67riG6R1zziPA3fi7K668NqYR7qyDhDTXHpfgZ-evYzGteFNKu-qBeuTYV23F1UvB27E/pub?gid=0&single=true&output=csv")
+
+# Extract example from Google Sheet.
+"prompt_example": =Query("SELECT * FROM $table")
+
+# Prompt itself, composed using the example data from Stripe and example summary text from GSheet.
 "output": =Object({"prompt": [{"role": "system", "content": "You are a business analyst for a SaaS reviewing accounts.  This customer account needs to be concisely summarized for our customer success team.  An example of a great summary: {% for line in prompt_example.first %} -- {{ line }} -- {% endfor %}"}, {"role": "user", "content": "{{ summary_data }}"}]})
+
+# Call GPT
 "gpt_response": =Gpt("gpt-4", "sk-youropenaikeyhere")
+
+# Turn GPT response into some friendly text.
 "account_note": =Text("""{{ gpt_response }}""")
+
+# Append the account note to a JSON response object with a single root attribute, `account_note`.
 "response": =Response("account_note")
 
+# Define flow of logic to compose the prompts.
+"customer_query" -> "customer_search" -> "parse_customer_search" -> "charges_query" -> "summary_data" -> "output" -> "gpt_response" -> "account_note" -> "response"
 
-
-"example_sheet": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vQpTQwjPoba67riG6R1zziPA3fi7K668NqYR7qyDhDTXHpfgZ-evYzGteFNKu-qBeuTYV23F1UvB27E/pub?gid=0&single=true&output=csv")
-"prompt_example": =Query("SELECT * FROM $table")
+# Fetch and query Google Sheet.
+"example_sheet" -> "prompt_example"
