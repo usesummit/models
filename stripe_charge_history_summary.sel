@@ -37,7 +37,7 @@
 "response": =Response("account_note")
 
 # Define flow of logic to compose the prompts.
-"customer_query" -> "customer_search" -> "parse_customer_search" -> "charges_query" -> "summary_data" -> "output" -> "gpt_response" -> "account_note" -> "response"
+"customer_query" -> "customer_search" -> "parse_customer_search" -> "charges_query" -> "charges_search" -> "summary_data" -> "output" -> "gpt_response" -> "account_note" -> "response"
 
 # Fetch and query Google Sheet.
 "example_sheet" -> "prompt_example"
