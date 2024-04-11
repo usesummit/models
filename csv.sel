@@ -2,5 +2,6 @@
 
 "csv_table": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vRg7CfZbL3V_h4fNzgl8KqTO7JKSuJ1NqJ03C3i4P6eK12jSDbOGPvTBPhzJMoQmkVEBLYUl2r5v5Sf/pub?gid=0&single=true&output=csv")
 "csv_rows": =Query("SELECT * FROM $table LIMIT 2")
+"my_csv_response": =Response("my_csv_data")
 
-"csv_table" -> "csv_rows"
+"csv_table" -> "csv_rows" -> "my_csv_response"
