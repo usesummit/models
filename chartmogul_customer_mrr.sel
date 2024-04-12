@@ -1,5 +1,8 @@
 #!/usesummit/sel/0.1a
 
+# NOTE: This is GPT-generated as a test.  It doesn't work yet.
+
+
 # Define the base64 encoded ChartMogul API Key
 "chartmogul_api_key": =Text("""Basic <your_api_key_here>""")
 
