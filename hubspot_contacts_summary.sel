@@ -1,0 +1,14 @@
+#!/usesummit/sel/0.1a
+
+"get_contacts": =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts"])
+
+"extract_emails": =Parser("$..email")
+
+"prompt": =Object({"prompt": [{"role": "system", "content": "You are the sales manager for a SaaS in Brisbane.  Your job is to summarize activity in a way that ownership can understand and appreciate.  Concisely."}, {"role": "user", "content": "Here are our latest leads.  Anything noteworthy? Please summarize.  {% for email in extract_emails %} {{ email }}, {% endfor %} "}]})
+
+"gpt": =Gpt("gpt-4-turbo", "sk-youropenaikeyhere")
+
+"new_lead_analysis": =Response("leadSummary")
+
+"get_contacts" -> "extract_emails" -> "prompt" -> "gpt" -> "new_lead_analysis"
+
