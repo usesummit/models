@@ -1,5 +1,6 @@
 #!/usesummit/sel/0.1a
 
+# FIXME: =Weather is no longer a part of SEL.  
 "Weather Request": =Weather("Raleigh, NC"<location>)
 
 # ---
