@@ -225,3 +225,27 @@ EXAMPLES OF FULL SEL FILES
 "example_sheet" -> "prompt_example"
 "customer_query" -> "customer_search" -> "parse_customer_search" -> "charges_query" -> "charges_search" -> "summary_data" -> "enriched_prompt" -> "gpt_response" -> "json_response_account_note"
 ```
+```
+#!/usesummit/sel/0.1a
+# Model to fetch a count of leads added to HubSpot in the last 14 days.
+
+# Define the necessary date for calculating the range of the last 14 days
+"current_date": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%d' }}"})
+"fourteen_days_ago": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%d' | subtract_days: 14 }}"})
+
+# Prepare the API request to HubSpot to fetch contacts created in the last 14 days
+"hubspot_contacts_query": =Object({"params": {"count": 100, "property": "createdate", "created_after": "{{ fourteen_days_ago.timestamp }}", "created_before": "{{ current_date.timestamp }}"}})
+
+# Declare the proxy which allows us to not use a HubSpot API key in the contacts query object.
+"fetch_hubspot_contacts": =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts"])
+
+# Pass params object to request proxy.
+"hubspot_contacts_query" -> "fetch_hubspot_contacts"
+
+# Parse the total number of contacts returned from the result
+"parse_total_contacts": =Parser("$.total")
+
+# Prepare and send the response
+"total_leads_response": =Response("total_leads_count")
+"parse_total_contacts" -> "total_leads_response"
+```
