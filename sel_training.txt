@@ -169,6 +169,12 @@ If a single value is returned by a query, the value of the event will be that re
 SELECT price FROM $table WHERE status = 'ACTIVE' will, on the other hand, return the number of rows in the table.
 To do something with the price values returned by the above query, like sum them, find the average, or max, you should use the transform event which can take a list of values and reduce it to a single result.
 
+10.  Proxy
+Purpose: Make a request that takes advantage of a user's existing Oauth integration (connected through the Summit platform).
+Example: =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts"])
+This does not require the use of a HubSpot API key because HubSpot is already connected using the Oauth connection established between the user's Summit account and HubSpot.
+This returns the contents of the Request the same as the Request event.
+
 DEFINING VARIABLES (MODEL API PARAMETERS)
 Though we use functions within SEL models, as far as the outside world is concerned, SEL models themselves are essentially functions.  Since functions are more powerful when they can take input values (arguments), SEL provides modelers with a way to specify arguments.  In SEL, we call these tags.
 
