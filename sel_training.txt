@@ -168,3 +168,54 @@ If we point a Table at this event, we will see a value in the results table and 
 If a single value is returned by a query, the value of the event will be that return value. Otherwise, the value of the event will be the number of rows returned by the query. Therefore, the above query will return the minimum price stored for ACTIVE products in the table.
 SELECT price FROM $table WHERE status = 'ACTIVE' will, on the other hand, return the number of rows in the table.
 To do something with the price values returned by the above query, like sum them, find the average, or max, you should use the transform event which can take a list of values and reduce it to a single result.
+
+DEFINING VARIABLES (MODEL API PARAMETERS)
+Though we use functions within SEL models, as far as the outside world is concerned, SEL models themselves are essentially functions.  Since functions are more powerful when they can take input values (arguments), SEL provides modelers with a way to specify arguments.  In SEL, we call these tags.
+
+We can define a tag inside a SEL expression by using `<` and `>`, like so:
+`=100<users>`
+In this case, `<users>` is the tag, and `users` is the parameter of the tag.
+Also:
+=Request("get"<method>, "https://example.com"<url>)
+
+EXAMPLES OF FULL SEL FILES
+
+```
+#!/usesummit/sel/0.1a
+
+# Fetch a remote CSV file which is a published google sheet.
+"csv_table": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vRg7CfZbL3V_h4fNzgl8KqTO7JKSuJ1NqJ03C3i4P6eK12jSDbOGPvTBPhzJMoQmkVEBLYUl2r5v5Sf/pub?gid=0&single=true&output=csv")
+
+# Query that table of data now that it's stored in SQLite db.
+"csv_rows": =Query("SELECT * FROM $table LIMIT 2"<query>)
+
+# Declare a place to store the results.
+"my_csv_response": =Response("my_csv_data")
+
+# Logical flow.
+"csv_table" -> "csv_rows" -> "my_csv_response"
+```
+
+```
+#!/usesummit/sel/0.1a
+# Model to search Stripe, then provide charge history to a GPT prompt.
+
+"customer_query": =Object({"query": "email:'matt@usesummit.com'<email>"})
+"customer_search": =Request('get', "https://rk_live_stripekey:@api.stripe.com/v1/customers/search")
+"parse_customer_search": =Parser('$.data[0].id')
+
+"charges_query": =Object({"query": "customer:'{{ parse_customer_search }}'"})
+"charges_search": =Request('get', "https://rk_live_stripekey:@api.stripe.com/v1/charges/search")
+
+"summary_data": =Text("""The data to summarize: {% for charge in charges_search.data %} Created: {{ charge.created }} Amount: ${{ charge.amount | divided_by: 100 }} {% endfor %} """)
+
+"enriched_prompt": =Object({"prompt": [{"role": "system", "content": "You are a business analyst for a SaaS reviewing accounts.  This customer account needs to be concisely summarized for our customer success team.  An example of a great summary: {% for line in prompt_example %} -- {{ line | escape }} -- {% endfor %}"}, {"role": "user", "content": "{{ summary_data }}"}]})
+"prompt_example_sheet": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vQpTQwjPoba67riG6R1zziPA3fi7K668NqYR7qyDhDTXHpfgZ-evYzGteFNKu-qBeuTYV23F1UvB27E/pub?gid=0&single=true&output=csv")
+"prompt_example": =Query("SELECT * FROM $table")
+"gpt_response": =Gpt("gpt-4", "sk-openaikey"<gpt_key>)
+
+"json_response_account_note": =Response("account_note")
+
+"example_sheet" -> "prompt_example"
+"customer_query" -> "customer_search" -> "parse_customer_search" -> "charges_query" -> "charges_search" -> "summary_data" -> "enriched_prompt" -> "gpt_response" -> "json_response_account_note"
+```
