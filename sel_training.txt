@@ -209,12 +209,15 @@ Fourth rule: Check your routes -> to make sure events are connected in logical o
 Fifth rule: Check for race conditions.  Ensure a chain of events occurs after another chain by using a Wait event.
 Sixth rule: Check for liquid syntax filters that are not supported by SEL.  SEL supports the following filters: abs,add_days,append,at_least,at_most,base64_decode,base64_encode,base64_url_safe_decode,base64_url_safe_encode,capitalize,ceil,compact,concat,date,default,divided_by,downcase,escape,escape_once,first,floor,join,last,lstrip,map,minus,modulo,newline_to_br,plus,prepend,remove,remove_first,remove_last,replace,replace_first,replace_last,reverse,round,rstrip,safe,size,slice,sort,sort_natural,split,strip,strip_html,strip_newlines,subtract_days,sum,times,truncate,truncatewords,uniq,upcase,url_decode,url_encode,where
 Seventh rule: SQL expressions inside of Query must be supported by SQLite.
+Eight rule: Include a model name and description on the first line after the #!, as a comment, like so:
+# [My Model // Fetches data from HubSpot and filers for Google emails.]
 
 ------
 
 EXAMPLES OF FULL SEL FILES
 ```
 #!/usesummit/sel/0.1a
+# [CSV Query // Fetches data from a remote CSV and selects the top few.]
 
 # Fetch a remote CSV file which is a published google sheet.
 "csv_table": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vRg7CfZbL3V_h4fNzgl8KqTO7JKSuJ1NqJ03C3i4P6eK12jSDbOGPvTBPhzJMoQmkVEBLYUl2r5v5Sf/pub?gid=0&single=true&output=csv")
@@ -231,7 +234,7 @@ EXAMPLES OF FULL SEL FILES
 
 ```
 #!/usesummit/sel/0.1a
-# Model to search Stripe, then provide charge history to a GPT prompt.
+# [Stripe History Search // Model to search Stripe, then provide charge history to a GPT prompt.]
 
 "customer_query": =Object({"query": "email:'matt@usesummit.com'<email>"})
 "customer_search": =Request('get', "https://rk_live_stripekey:@api.stripe.com/v1/customers/search")
@@ -254,7 +257,7 @@ EXAMPLES OF FULL SEL FILES
 ```
 ```
 #!/usesummit/sel/0.1a
-# Model to fetch a count of leads added to HubSpot in the last 14 days.
+# [HubSpot Lead Search // Model to fetch a count of leads added to HubSpot in the last 14 days.]
 
 # Define the necessary date for calculating the range of the last 14 days
 "current_date": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%d' }}"})
