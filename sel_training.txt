@@ -37,7 +37,7 @@ Here's how we might use Request and Object together in a .sel file.  Objects are
 The portions in quotes like "querystring" are the names of the events (nodes) of the execution.  The : separates the name from the SEL function.  All events must be declared before they are referenced in a route definition using the -> arrow syntax.
 
 3. Parser
-Purpose: Use a JSONPath expression to parse the output of a Request or any JSON object.	
+Purpose: Use a JSONPath expression to parse the JSON output of a Request or any JSON object.	
 Input: JSON, typically returned from a Request.	
 Output: A JSON list of matches.	
 Example: =Parser('$..coordinates.lat')
@@ -45,6 +45,7 @@ Description: If you want to use the response of your request, you'll need to cre
 These events take a JSONPath argument that defines a search to retrieve the value you want from the response data, like so:
 =Parser('$.pricing.express_overnight')
 The parser event itself will extract and pass along the values it finds using your expression as a list of values.
+NOTE: If a Request returns HTML, we can simply send the contents to a Text event to parse and clean the contents.
 
 4. Text
 Purpose: Write and create long strings of text using liquid syntax.	
