@@ -211,6 +211,7 @@ Sixth rule: Check for liquid syntax filters that are not supported by SEL.  SEL 
 Seventh rule: SQL expressions inside of Query must be supported by SQLite.
 Eight rule: Include a model name and description on the first line after the #!, as a comment, like so:
 # [My Model // Fetches data from HubSpot and filers for Google emails.]
+Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
 
 ------
 
