@@ -213,7 +213,7 @@ Seventh rule: SQL expressions inside of Query must be supported by SQLite.
 Eight rule: Include a model name and description on the first line after the #!, as a comment, like so:
 # [My Model // Fetches data from HubSpot and filers for Google emails.]
 Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
-Tenth rule: Ensure that any Request objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
+Tenth rule: Ensure that any Request and Proxy objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
 
 ------
 
