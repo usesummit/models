@@ -216,7 +216,7 @@ Eight rule: Include a model name and description on the first line after the #!,
 Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
 Tenth rule: Ensure that any Request and Proxy objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
 Eleventh rule: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
-
+Twefth rule: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
 
 ------
 
