@@ -15,6 +15,7 @@ Example: =Request('get', 'https://api.example.com/x.json')
 Description: A Request fetches data from a remote location (URL). If we want, for example, to pull in the contents of an HTML page, we can make a GET request like so:
 =Request('get', 'https://example.com/content.html')
 This event will fetch the contents of this URL and store them in the event.
+NOTE: Request takes 2 and only 2 arguments.  All "params", "headers", "cookies", and "data" arguments to the Request should be captured in separate, upstream Objects.
 
 2.  Object
 Purpose: Defines a literal object using JSON syntax.	
@@ -212,6 +213,7 @@ Seventh rule: SQL expressions inside of Query must be supported by SQLite.
 Eight rule: Include a model name and description on the first line after the #!, as a comment, like so:
 # [My Model // Fetches data from HubSpot and filers for Google emails.]
 Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
+Tenth rule: Ensure that any Request objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
 
 ------
 
