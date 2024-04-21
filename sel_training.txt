@@ -74,9 +74,10 @@ However, you must make sure that the event you wish to insert (ex. my_other_text
 "my_text_a" -> "my_other_text_event"
 
 5. Matches
-Purpose: Finds all values that match a provided regular expression.	
+Purpose: Finds all values within a string that match a provided regular expression.	
 Input: A list, a string, or text.	
-Output: A list of matches found within the input.	Example: =Matches("\d{1,}")
+Output: A list of matches found within the input.	
+Example: An event sends a string containing latitude and longitude: "-97.21312,30.456" to =Matches("-?\d+\.\d+") which splits it into [-97.21312, 30.456] for use by =Parser('$[0]') and =Parser('$[1]')
 Description: Perhaps you'd like to see if a string contains a certain expression, but you don't know for sure what the substring will look like. To do that, SEL provides the Matches event. The only argument to the Matches event type is a regular expression, or regex for short.
 We can use this event type like so:
 =Matches("\d")
@@ -217,6 +218,7 @@ Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must 
 Tenth rule: Ensure that any Request and Proxy objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
 Eleventh rule: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
 Twefth rule: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
+Thirteenth rule: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
 
 ------
 
