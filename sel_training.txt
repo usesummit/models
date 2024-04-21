@@ -59,6 +59,7 @@ The Text event should always start and end with triple quotes: """".
 One special power of the Text type is its ability to incorporate liquid syntax, which contains a veritable ocean of ways to filter, transform, and format text, for example:
 =Text(""" {{ "moby dick" | capitalize }} """)
 Would generate the value: MOBY DICK.
+SYNTAX RULE: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
 Most powerfully, you can refer to the value of other events on the canvas by using their titles. If you had a String event like so:
 =String('whale of a tale')
 And its title was draft_book_name, then you could use that string in your Text block:
@@ -214,6 +215,8 @@ Eight rule: Include a model name and description on the first line after the #!,
 # [My Model // Fetches data from HubSpot and filers for Google emails.]
 Ninth rule: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
 Tenth rule: Ensure that any Request and Proxy objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
+Eleventh rule: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
+
 
 ------
 
