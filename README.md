@@ -16,7 +16,9 @@ If you're wondering why SEL exists at all, [this page does a good job of explain
 ## How SEL models work & limitations
 
 ### What really is SEL?
-SEL is an abstraction layer on Python that removes a lot of the heavy-lifting, which has stripped a lot of the joy out of rapidly coding something that creates value.  GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
+SEL is an abstraction layer on Python that removes a lot of the heavy-lifting, which has stripped a lot of the joy out of rapidly coding something that creates value, and also prevents no-coders from contributing extensions to their favorite platforms.  SEL solves this by being a quick, fun, powerful, and complementary tool to platforms like Make, Zapier, Glide, et al.
+
+GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
 
 ### Orientation
 What you see in Summit when you build and host a model is an interface (canvas-based IDE) to create and connect the expressions of a model ("events").
