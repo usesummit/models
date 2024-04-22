@@ -13,6 +13,8 @@ If you're wondering why SEL exists at all, this page does a good job of explaini
 Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
 
 ## How SEL models work & limitations
+
+### Orientation
 What you see in Summit when you build and host an app is an interface (canvas-based IDE) to create and connect events, define their recurring patterns, and insert SEL expressions to run when they execute.
 
 The documentation for the full library of SEL expressions (event types, conditionals, constants, etc.) can be found at https://summit.readme.io/docs.
@@ -42,7 +44,7 @@ Example:
 
 When uploaded to Summit, this will be turned into an model with an API that calculates the value `10` and returns a response object containing a `data` attribute: `"total": 10`.
 
-## Limitations
+### Limitations
 Some features of the language are not yet supported in `.sel` notation.  Namely:
 
 - To have event recur, you must use an `Every()` event (no direct setting on individual events).
