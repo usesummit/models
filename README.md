@@ -51,7 +51,7 @@ When uploaded to Summit, this will be turned into an model with an API that calc
 ### Limitations
 Some features of the language are not yet supported in `.sel` notation.  Namely:
 
-- To have event recur, you must use an `Every()` event (no direct setting on individual events).
+- If you're building a simulation (not a data transformation), to have an event recur, you must use an `Every()` event (no direct setting on individual events).
 
 ## How to help
 
