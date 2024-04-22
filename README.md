@@ -5,7 +5,7 @@ Because no-code needs open-source libraries.
 Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
 
 ## Preface
-This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
+This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We've recently begun the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
 Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.
 
@@ -21,7 +21,7 @@ Summit Event Language (SEL) is an abstraction layer on Python that removes a lot
 ### Orientation
 What you see in Summit when you build and host a model is an interface (canvas-based IDE) to create and connect the expressions of a model ("events").
 
-The documentation for the full library of SEL expressions (event types, conditionals, constants, etc.) can be found at https://summit.readme.io/docs.
+The documentation for the full library of SEL expressions (event types, conditionals, constants, etc.) can be found in our [Technical Documentation](https://summit.readme.io/docs).
 
 Since much of the work to wrap and define an model is handled on usesummit.com as part of the IDE, the text-based version of SEL (.sel) has an expanded set of rules and syntax that must be explicitly declared in order to create a working model.  Namely:
 
