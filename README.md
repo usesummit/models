@@ -1,4 +1,5 @@
 # Summit Models
+Because no-code needs open-source libraries.
 
 ## Background
 This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
