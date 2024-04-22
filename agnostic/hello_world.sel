@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [Hello World // The world's favorite first coding example. ]
+
+"text_block": =Text("""Hello, {{ subject }}!""")
+"my_text_response": =Response("myText")
+
+# Sam becomes an input to the model by adding the <subject> tag.
+"subject": =String("Sam"<subject>)
+
+"text_block" -> "my_text_response"
