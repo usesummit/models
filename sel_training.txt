@@ -112,9 +112,12 @@ In the SQL of Query events, you can refer to an immediately-upstream, unnamed ta
 "query_it": =Query("SELECT * FROM $table")
 "my_worksheet" -> "query_it"
 ```
-You may pass a list of dictionaries to Table (ex. `Parser` output).  To do so, leave it empty:
+You may pass any list of dictionaries to Table (ex. `Parser` output).  To do so, give it a name and connect it to a Query.
 ```
-"hungry_for_json_object_lists": =Table()
+"pipeline_objects": =Parser('$..properties')
+"hungry_for_a_list_of_pipeline_objects": =Table("deals")
+"pipeline_query": =Query("SELECT * FROM deals LIMIT 5")
+"pipeline_objects" -> "hungry_for_a_list_of_pipeline_objects" -> "pipeline_query"
 ```
 9. Query
 `"my_event" =Query("<VALID_SQLITE_QUERY>")`
@@ -166,6 +169,7 @@ When reviewing SEL code, enforce the following rules of good SEL code:
 11th: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
 12th: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
 13th: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
+14th: Table
 ------
 EXAMPLES OF FULL SEL FILES
 ```
