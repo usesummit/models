@@ -52,7 +52,6 @@ When uploaded to Summit, this will be turned into an model with an API that calc
 Some features of the language are not yet supported in `.sel` notation.  Namely:
 
 - To have event recur, you must use an `Every()` event (no direct setting on individual events).
-- Choosing what measurement values ought to appear by default for an event in the output table.
 
 ## How to help
 
