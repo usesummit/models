@@ -5,7 +5,7 @@ Because no-code needs open-source libraries.
 Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
 
 ## Preface
-This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We've recently begun the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
+This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We recently began the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
 Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.
 
@@ -16,7 +16,7 @@ If you're wondering why SEL exists at all, [this page does a good job of explain
 ## How SEL models work & limitations
 
 ### What really is SEL?
-Summit Event Language (SEL) is an abstraction layer on Python that removes a lot of the heavy-lifting, which has stripped a lot of the joy out of rapidly coding something that creates value.  GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
+SEL is an abstraction layer on Python that removes a lot of the heavy-lifting, which has stripped a lot of the joy out of rapidly coding something that creates value.  GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
 
 ### Orientation
 What you see in Summit when you build and host a model is an interface (canvas-based IDE) to create and connect the expressions of a model ("events").
