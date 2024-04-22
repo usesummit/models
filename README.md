@@ -1,7 +1,10 @@
 # Summit Models
 Because no-code needs open-source libraries.
 
-## Background
+## How model files are organized
+Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
+
+## Preface
 This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to https://usesummit.com.  We are beginning the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
 Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.
@@ -10,13 +13,13 @@ If you're reading this, you likely either work at Summit or you are a close frie
 
 If you're wondering why SEL exists at all, [this page does a good job of explaining](https://summit.readme.io/docs/what-it-is-why).
 
-## How model files are organized
-Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
-
 ## How SEL models work & limitations
 
+### What really is SEL?
+Summit Event Language (SEL) is an abstraction layer on Python that removes a lot of the heavy-lifting, which has stripped a lot of the joy out of rapidly coding something that creates value.  GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
+
 ### Orientation
-What you see in Summit when you build and host an app is an interface (canvas-based IDE) to create and connect events, define their recurring patterns, and insert SEL expressions to run when they execute.
+What you see in Summit when you build and host a model is an interface (canvas-based IDE) to create and connect the expressions of a model ("events").
 
 The documentation for the full library of SEL expressions (event types, conditionals, constants, etc.) can be found at https://summit.readme.io/docs.
 
