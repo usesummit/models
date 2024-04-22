@@ -16,7 +16,7 @@ If you're wondering why SEL exists at all, [this page does a good job of explain
 ## How SEL models work & limitations
 
 ### What really is SEL?
-SEL is a declarative langage (hence all the `=` signs) that allows no-coders to describe functionality and a logical flow between building blocks ("events").  As an abstraction of Python, it removes a lot of the heavy-lifting and tedium -- the hurdles that rob the joy out of coding a tiny script, plugin, or extension that creates value. SEL solves this by being a quick, fun, powerful, and complementary tool to platforms like Make, Zapier, Glide, et al.
+SEL is a declarative langage (hence all the `=` signs) that allows makers to chain together building blocks ("events") using arrows `->` called "routes".  As an abstraction of Python, it removes a lot of the heavy-lifting and tedium -- the hurdles that rob the joy out of coding a tiny script, plugin, or extension that creates value. SEL solves this by being a quick, fun, powerful, and complementary tool to platforms like Make, Zapier, Glide, et al.
 
 GPT doesn't make this benefit obsolete, because GPT can also generate SEL, which is more compact, faster to generate than its general-purpose counterparts.
 
