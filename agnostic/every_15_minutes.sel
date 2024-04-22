@@ -1,0 +1,13 @@
+#!/usesummit/sel/0.1a
+
+# Interval
+"Event": =Every('*/15 * * * *')
+"Counter": =Counter(0<max_run_count>)
+
+"Event" -> "Counter"
+
+# If `end_date` is specified, this will halt on that date.
+"Stop On": =Wait(''<end_date>)
+"Halt": =Halt()
+
+"Stop On" -> "Halt"
