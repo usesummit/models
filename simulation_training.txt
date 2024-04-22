@@ -63,6 +63,7 @@ You may optionally grow or shrink a source each time it executes:
 "revenue_stream": =Source(100k @ 3%)
 ```
 This will increase the value the source sends by 3% each time it runs.
+Values passed to a Source will increase the amount generated at each interval.
 
 6. Every
 Syntax: `"my_trigger": =Every(<NUMBER>, "<INTERVAL>")` or `"my_trigger": Every("<CRON_EXPRESSION>", "<OLSON_TIMEZONE>")`
@@ -142,6 +143,26 @@ EXAMPLES OF FULL SEL FILES
 "expenses_frequency" -> "weekly_expenses_amount" -> "checking_account"
 ```
 
+```
+#!/usesummit/sel/0.1a
+
+# [SaaS Marketing Funnel // How leads become money.]
+# This will simulate a flow of values using Source as the first event.
+
+# Top of funnel
+"inbound_frequency": =Every(1, 'weeks')
+"new_inbound_leads": =Source(50 @ 1%)
+
+# Conversion rate and monetization
+"conversions": * 20/100
+"arpc": * 49
+
+# Where my money goes
+"business_account": =Pool(1_250_000)
+
+# Draw the funnel using ->
+"inbound_frequency" -> "new_inbound_leads" -> "conversions" -> "arpc" -> "business_account"
+```
 
 
 
