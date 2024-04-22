@@ -199,7 +199,24 @@ EXAMPLES OF FULL SEL FILES
 # Logical flow.
 "csv_table" -> "csv_rows" -> "my_csv_response"
 ```
+```
+#!/usesummit/sel/0.1a
+# [ Average Deal Closure Time  //  Calculates the average time taken to close deals from HubSpot.]
 
+"deals_params": =Object({"params": {"properties": "createdate,closedate", "dealstage": "closedwon"}})
+"fetch_deals_data": =Proxy("hubspot", ["GET", "/crm/v3/objects/deals"])
+"extract_deal_properties": =Parser('$..properties')
+"deals_table": =Table("deals")
+# Use SQL to do the heavy lifting.
+"calculate_average_close_time": =Query("SELECT AVG(julianday(closedate) - julianday(createdate)) as average_days FROM deals WHERE closedate IS NOT NULL AND createdate IS NOT NULL")
+"average_close_response": =Response("average_days_to_close")
+
+"deals_params" -> "fetch_deals_data"
+"fetch_deals_data" -> "Parser"
+"deals_table" -> "calculate_average_close_time"
+"calculate_average_close_time" -> "average_close_response"
+"Parser" -> "deals_table"
+```
 ```
 #!/usesummit/sel/0.1a
 # [HubSpot Lead Search // Model to fetch a count of leads added to HubSpot in the last 14 days.]
