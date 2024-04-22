@@ -4,7 +4,12 @@
 
 "extract_emails": =Parser("$..email")
 
-"prompt": =Object({"prompt": [{"role": "system", "content": "You are the sales manager for a SaaS in Brisbane.  Your job is to summarize activity in a way that ownership can understand and appreciate.  Concisely."}, {"role": "user", "content": "Here are our latest leads.  Anything noteworthy? Please summarize.  {% for email in extract_emails %} {{ email }}, {% endfor %} "}]})
+"prompt": =Object({"prompt": 
+  [
+    {"role": "system", "content": "You are the sales manager for a SaaS in Brisbane.  Your job is to summarize activity in a way that ownership can understand and appreciate.  Concisely."}, 
+    {"role": "user", "content": "Here are our latest leads.  Anything noteworthy? Please summarize.  {% for email in extract_emails %} {{ email }}, {% endfor %} "}
+  ]
+})
 
 "gpt": =Gpt("gpt-4-turbo", "sk-youropenaikeyhere")
 
