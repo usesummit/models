@@ -7,7 +7,7 @@ Since models are often shaped with a specific data source in mind (ex. a CRM, a 
 ## Preface
 This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We recently began the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute.
 
-Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.
+Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.  One source of inspiration is [dbt labs](https://github.com/dbt-labs/dbt-core).
 
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
