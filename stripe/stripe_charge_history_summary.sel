@@ -1,4 +1,5 @@
 #!/usesummit/sel/0.1a
+# [ Customer Charge Summary // Automatically retrieve Stripe history for a customer and summarize it using GPT and an example prompt. ]
 
 # Create search query to send to Stripe API.
 "customer_query": =Object({"query": "email:'paul@example.com'<email>"})
