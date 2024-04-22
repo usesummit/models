@@ -31,11 +31,16 @@ Example:
 Valid <OPERATOR>s: + / * -
 
 3.  Pool
-Syntax: `"my_event": =Pool(<NUMBER>)`
+Syntax: `"my_event": =Pool(<NUMBER>)` or `"my_event": =Pool(<NUMBER> @ <GROWTH_RATE>%)`
 Purpose: A Pool is an summation event that collects all of the values it receives, has no limit to the amount it can store.  The input value is the initial value stored in the event.
 Example: 
 ```
+# Static balance, no interest.
 "bank_account": =Pool(5000)
+# Grow by 0.2% each time this executes.
+"bank_account_yield_frequency": =Every(1, 'months')
+"bank_account_with_yield": =Pool(15000 @ 0.2%)
+"bank_account_yield_frequency" -> "bank_account_with_yield"
 ```
 This stores the number 5000 inside a container (stock) of the `my_number` event. The 5000 is the amount of value the pool contains at the start of the simulation.  As numbers are received by the pool, this value will grow.  It will shrink if negative numbers are sent to it.  A good use of a pool might be a bank account or storage system that has no limits.
 
@@ -163,6 +168,4 @@ EXAMPLES OF FULL SEL FILES
 # Draw the funnel using ->
 "inbound_frequency" -> "new_inbound_leads" -> "conversions" -> "arpc" -> "business_account"
 ```
-
-
 
