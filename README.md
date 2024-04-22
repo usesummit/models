@@ -9,6 +9,9 @@ If you're reading this, you likely either work at Summit or you are a close frie
 
 If you're wondering why SEL exists at all, this page does a good job of explaining: https://summit.readme.io/docs/what-it-is-why
 
+## Organization
+Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
+
 ## How it works
 What you see in Summit when you build and host an app is an interface (canvas-based IDE) to create and connect events, define their recurring patterns, and insert SEL expressions to run when they execute.
 
