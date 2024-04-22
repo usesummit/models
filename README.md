@@ -52,5 +52,9 @@ Some features of the language are not yet supported in `.sel` notation.  Namely:
 
 ## How to help
 
-We are still very much in the alpha phase.  The most useful things at the moment are questions that help us figure out your interests and the future of SEL.  If you have one, let us know!
+We are still very much in the alpha phase.  The most useful things at the moment:
+
+- Request access to Summit at usesummit.com and let us know you'd like to contribute
+- Use "Create with AI" to create models, then test them and place them here for others.
+- Sponsor this project!  This repo is free and we have a generous free tier.  Lets keep it that way.
 
