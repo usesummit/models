@@ -1,0 +1,7 @@
+A collection of interesting prompts.
+
+"""
+I want a bullet-point summary of deals currently in the pipeline that are older than 30 days.  
+I want to know how much they're worth, who owns them, how old they are, and what stage they're in.  
+We use HubSpot.
+"""
