@@ -1,0 +1,23 @@
+#!/usesummit/sel/0.1a
+# [Deal Closure Time // How long it takes to get a deal to closedwon, on average. ]
+#
+# **Explanation of the code:**
+# - **deal_params**: This Object event defines the necessary parameters for the API request to ensure only the required properties (createdate, closedate) of deals in the "closedwon" stage are fetched.
+# - **fetch_deals**: The Proxy event makes an authorized request to the HubSpot CRM API to retrieve deals using the parameters defined in `deal_params`. 
+# - **parse_deals**: The Parser extracts only the properties section from the JSON response, which includes fields like createdate and closedate for each deal.
+# - **deals_to_table**: The extracted deal properties are loaded into an in-memory SQLite database table named `"deals"`.
+# - **query_closure_times**: Executes a SQL query on the `"deals"` table to compute the duration in days between the creation and closing of each deal. The column `closure_time_days` stores these computed values.
+# - **response_closure_times**: The Response gathers the computed closure time days and constructs an output array, making it available for downstream uses like API responses.
+
+"query_closure_times": =Query("SELECT AVG(julianday(closedate) - julianday(createdate)) as closure_time_days FROM deals WHERE closedate IS NOT NULL AND createdate IS NOT NULL")
+"response_closure_times": =Response("deal_closure_times[]")
+"parse_deals": =Parser('$..properties')
+"deals_to_table": =Table("deals")
+"deal_params": =Object({"params": {"properties": "createdate,closedate", "dealstage": "closedwon"}})
+"fetch_deals": =Proxy("hubspot", ["GET", "/crm/v3/objects/deals"])
+
+"query_closure_times" -> "response_closure_times"
+"parse_deals" -> "deals_to_table"
+"deals_to_table" -> "query_closure_times"
+"deal_params" -> "fetch_deals"
+"fetch_deals" -> "parse_deals"
