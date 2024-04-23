@@ -223,7 +223,7 @@ EXAMPLES OF FULL SEL FILES
 
 # Define the necessary date for calculating the range of the last 14 days
 "current_date": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%d' }}"})
-"fourteen_days_ago": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%d' | subtract_days: 14 }}"})
+"fourteen_days_ago": =Object({"timestamp": "{{ 'now' | subtract_days: 14 | date: '%Y-%m-%d' }}"})
 
 # Prepare the API request to HubSpot to fetch contacts created in the last 14 days
 "hubspot_contacts_query": =Object({"params": {"count": 100, "property": "createdate", "created_after": "{{ fourteen_days_ago.timestamp }}", "created_before": "{{ current_date.timestamp }}"}})
