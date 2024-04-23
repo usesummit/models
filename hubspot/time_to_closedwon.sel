@@ -9,12 +9,12 @@
 # - **query_closure_times**: Executes a SQL query on the `"deals"` table to compute the duration in days between the creation and closing of each deal. The column `closure_time_days` stores these computed values.
 # - **response_closure_times**: The Response gathers the computed closure time days and constructs an output array, making it available for downstream uses like API responses.
 
-"query_closure_times": =Query("SELECT AVG(julianday(closedate) - julianday(createdate)) as closure_time_days FROM deals WHERE closedate IS NOT NULL AND createdate IS NOT NULL")
-"response_closure_times": =Response("deal_closure_times[]")
-"parse_deals": =Parser('$..properties')
-"deals_to_table": =Table("deals")
 "deal_params": =Object({"params": {"properties": "createdate,closedate", "dealstage": "closedwon"}})
 "fetch_deals": =Proxy("hubspot", ["GET", "/crm/v3/objects/deals"])
+"parse_deals": =Parser('$..properties')
+"deals_to_table": =Table("deals")
+"query_closure_times": =Query("SELECT AVG(julianday(closedate) - julianday(createdate)) as closure_time_days FROM deals WHERE closedate IS NOT NULL AND createdate IS NOT NULL")
+"response_closure_times": =Response("deal_closure_times[]")
 
 "query_closure_times" -> "response_closure_times"
 "parse_deals" -> "deals_to_table"
