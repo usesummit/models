@@ -201,6 +201,23 @@ EXAMPLES OF FULL SEL FILES
 ```
 ```
 #!/usesummit/sel/0.1a
+# [ Breckenridge Weather Forecast  // Prompt: "Can you build a weather forecasting API for Breckenridge, Colorado?  Please use data from the National Weather Service."]
+
+"weather_params": =Object({"url": "https://api.weather.gov/gridpoints/BOU/62,105/forecast"})
+"fetch_weather": =Request('get', '{{ weather_params.url }}')
+"parse_forecast": =Parser('$.properties.periods[*]')
+"forecast_table": =Table("forecasts")
+"select_forecast_details": =Query("SELECT name, temperature || ' ' || temperatureUnit as temperature, detailedForecast FROM forecasts")
+"weather_forecast_response": =Response("forecast_details[]")
+
+"weather_params" -> "fetch_weather"
+"fetch_weather" -> "parse_forecast"
+"parse_forecast" -> "forecast_table"
+"forecast_table" -> "select_forecast_details"
+"select_forecast_details" -> "weather_forecast_response"
+```
+```
+#!/usesummit/sel/0.1a
 # [ Average Deal Closure Time  //  Calculates the average time taken to close deals from HubSpot.]
 
 "deals_params": =Object({"params": {"properties": "createdate,closedate", "dealstage": "closedwon"}})
