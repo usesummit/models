@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Deal Summary  // Summarize all deals that are more than 30 days old. ]
+
+"deals_params": =Object({"params": {"properties": "dealname,ownerid,createdate,dealstage,amount", "includeAssociations": false, "filters": [{"propertyName": "createdate", "operator": "LT", "value": "{{ today_minus_thirty.timestamp }}"}]}})
+"fetch_open_deals": =Proxy("hubspot", ["GET", "/crm/v3/objects/deals"])
+"today_minus_thirty": =Object({"timestamp": "{{ 'now' | subtract_days: 30 | date: '%Y-%m-%d' }}"})
+"parse_deals": =Parser('$..results[*].properties')
+"deals_table": =Table("deals")
+"deal_summary_query": =Query("SELECT dealname as 'Deal Name', julianday('now') - julianday(createdate) as 'Age in Days', dealstage as 'Stage', amount as 'Amount' FROM deals WHERE dealstage NOT IN ('closedwon', 'closedlost')")
+"deal_summary_response": =Response("deals_summary")
+
+"deals_params" -> "fetch_open_deals"
+"fetch_open_deals" -> "parse_deals"
+"today_minus_thirty" -> "deals_params"
+"parse_deals" -> "deals_table"
+"deals_table" -> "deal_summary_query"
+"deal_summary_query" -> "deal_summary_response"
