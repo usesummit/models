@@ -1,0 +1,18 @@
+#!/usesummit/sel/0.1a
+# [Fetch and Query Airtable Data using Proxy and JSON Table]
+
+# Use Proxy to fetch data from Airtable
+"fetch_airtable_data": =Proxy("airtable", ["GET", "/v0/appYOURBASEID/YourTableName"])
+
+# Parse the JSON to extract the list of records
+"parse_airtable_data": =Parser('$.records')
+
+# Load the parsed data into a JSON table
+"airtable_json_table": =Table("airtable_data", "json")
+
+# Define a SQL query to extract data from JSON fields
+"query_json_data": =Query("SELECT json_extract(data, '$.fieldname') AS extracted_field FROM airtable_data")
+
+# Logical flow
+"fetch_airtable_data" -> "parse_airtable_data" -> "airtable_json_table" -> "query_json_data"
+
