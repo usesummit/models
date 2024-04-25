@@ -106,13 +106,15 @@ Example:
 ```
 
 8. Table
-`"my_event": =Table("<CSV_URL>")` or `"my_event": =Table("<CSV_URL>", "<TABLE_NAME>")`
+`"my_event": =Table("<CSV_URL>")` or `"my_event": =Table("<CSV_URL>", "<TABLE_NAME>")` or `"my_event": =Table("<TABLE_NAME>", "json")`
 Pull CSV data into a small, in-memory SQLite database table.
 Example:
 ```
 "my_worksheet": =Table('https://docs.google.com/...'<csv_url>)
 # Optionally, specify a <TABLE_NAME>
 "my_people": =Table('https://docs.google.com/...'<csv_url>, "contacts")
+# Optionally, specify a <TABLE_NAME> and declare it a JSON table
+"my_json": =Table('contacts', 'json')
 ```
 In the SQL of Query events, you can refer to an immediately-upstream, unnamed table as $table.
 ```
@@ -126,6 +128,14 @@ You may pass any list of dictionaries to Table (ex. `Parser` output).  To do so,
 "pipeline_query": =Query("SELECT * FROM deals LIMIT 5")
 "pipeline_objects" -> "hungry_for_a_list_of_pipeline_objects" -> "pipeline_query"
 ```
+If the dictionaries in the list are not guaranteed to be uniformly-keyed, use a JSON table:
+```
+"irregular_objects": =Parser('$..books')
+"books_table": =Table("books", "json")
+"harry_potter_query": =Query("SELECT json_extract(data, '$.ISBN') AS isbn FROM books WHERE json_extract(data, '$.Title') LIKE '%HARRY POTTER%'")
+"harry_potter_books" -> "books_table" -> "harry_potter_query"
+```
+
 9. Query
 `"my_event" =Query("<VALID_SQLITE_QUERY>")`
 Run a SQLite-valid query on a `Table`.
