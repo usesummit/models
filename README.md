@@ -1,6 +1,8 @@
 # Summit Models
 Because no-code needs open-source libraries.
 
+Models can be imported into Summit as plaintext [using the import feature](https://usesummit.com/e/boards/import).
+
 ## How model files are organized
 Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.
 
