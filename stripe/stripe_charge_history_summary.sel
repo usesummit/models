@@ -4,8 +4,8 @@
 # Create search query to send to Stripe API.
 "customer_query": =Object({"query": "email:'paul@example.com'<email>"})
 
-# Stripe API call #1 - search customers for this email
-"customer_search": =Request('get', "https://rk_live_yourstripekeyhere:@api.stripe.com/v1/customers/search")
+# Stripe API call #1 - search customers for this email - note the use of {{ STRIPE_API_KEY }} as a vault item.
+"customer_search": =Request('get', "https://{{ STRIPE_API_KEY }}:@api.stripe.com/v1/customers/search")
 
 # Parse out the customer ID's from the search results
 "parse_customer_search": =Parser('$.data[0].id')
@@ -13,8 +13,8 @@
 # Create search query for finding charges with this customer ID
 "charges_query": =Object({"query": "customer:'{{ parse_customer_search }}'"})
 
-# Search charges for this customer ID
-"charges_search": =Request('get', "https://rk_live_yourstripekeyhere:@api.stripe.com/v1/charges/search")
+# Search charges for this customer ID - note the use of {{ STRIPE_API_KEY }} as a vault item.
+"charges_search": =Request('get', "https://{{ STRIPE_API_KEY }}:@api.stripe.com/v1/charges/search")
 
 # Data for prompt.
 "summary_data": =Text("""The data to summarize: {% for charge in charges_search.data %} Created: {{ charge.created }} Amount: ${{ charge.amount | divided_by: 100 }} {% endfor %} """)
@@ -28,8 +28,8 @@
 # Prompt itself, composed using the example data from Stripe and example summary text from GSheet.
 "output": =Object({"prompt": [{"role": "system", "content": "You are a business analyst for a SaaS reviewing accounts.  This customer account needs to be concisely summarized for our customer success team.  An example of a great summary: {% for line in prompt_example.first %} -- {{ line }} -- {% endfor %}"}, {"role": "user", "content": "{{ summary_data }}"}]})
 
-# Call GPT
-"gpt_response": =Gpt("gpt-4", "sk-youropenaikeyhere")
+# Call GPT - note the use of {{ OPENAI_KEY }} as a vault item.
+"gpt_response": =Gpt("gpt-4", "{{ OPENAI_KEY }}")
 
 # Turn GPT response into some friendly text.
 "account_note": =Text("""{{ gpt_response }}""")
