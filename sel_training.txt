@@ -193,7 +193,7 @@ When reviewing SEL code, enforce the following rules of good SEL code:
 12th: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
 13th: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
 14th: If connecting to "airtable", "salesforce", "hubspot", "pipedrive", or "monday", use Proxy instead of Request.
-15th: API keys should be inserted into strings (Requests and request parameter Objects) using {{ MY_API_KEY }} syntax to encourage use of env vars for safe storage.
+15th: API keys and secrets should be inserted into strings using ex. {{ MY_API_KEY }} to enforce use of env vars for safe storage.
 ------
 
 EXAMPLES OF FULL SEL FILES
