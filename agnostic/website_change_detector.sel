@@ -1,0 +1,26 @@
+#!/usesummit/sel/0.1a
+
+# Ping wayback machine to get page closest to now, scrape it, and clean it.
+"url_now": =Object({"params": {"url": "glideapps.com"<customer_url>}, "sleep": 1})
+"wayback_machine_today": =Request('get', "http://archive.org/wayback/available")
+"json_extract": =Parser('$..closest')
+"scrape_today": =Request('get', "{{ json_extract.first.url }}")
+"scrape_now_clean": =Text(""" {{ scrape_today |  strip_html | strip_newlines | escape }} """)
+
+# Ping wayback machine to get archived page closest to timestamp date, scrape it, and clean it.
+"url_prior": =Object({"params": {"url": "glideapps.com"<customer_url>, "timestamp": "20230415"<since>}, "sleep": 1})
+"wayback_machine_prior": =Request('get', "http://archive.org/wayback/available")
+"json_extract_prior": =Parser('$..closest')
+"scrape_prior": =Request('get', "{{ json_extract_prior.first.url }}")
+"scrape_prior_clean": =Text(""" {{ scrape_prior |  strip_html | strip_newlines | escape }} """)
+
+# Wait until scraping and requests are finished, then feed to GPT.
+"pause": =Wait(1)
+"prompt": =Object({"prompt": [{"role": "system", "content": "You are a business analyst for a SaaS reviewing accounts.  Any changes in our key clients businesses need to be concisely summarized for our customer success team."}, {"role": "user", "content": "Please compare the following two website scrapes, and explain any interesting evolutions in our customers marketing strategy or positioning.  #### HERE IS THEN ####  {{ scrape_now_clean | truncatewords: 250 | escape }} -- #### HERE IS NOW #### {{ scrape_prior_clean | truncatewords: 250 | escape }} "}]})
+"gpt": =Gpt("gpt-4-turbo", "{{ OPENAI_KEY }}")
+"json_response": =Response("gpt_says")
+
+"json_response" -> "_debug"
+"url_now" -> "wayback_machine_today" -> "json_extract" -> "scrape_today" -> "scrape_now_clean"
+"url_prior" -> "wayback_machine_prior" -> "json_extract_prior" -> "scrape_prior" -> "scrape_prior_clean"
+"pause" -> "prompt" -> "gpt" -> "json_response"
