@@ -87,7 +87,7 @@ Examples:
 ```
 Applying the [] tells SEL that this response element is an array. Data sent here will be appended.
 7. Gpt
-`"my_event": =Gpt("<MODEL>", "<OPENAI_KEY>")`
+`"my_event": =Gpt("<MODEL>", "{{ OPENAI_KEY }}")`
 Generate text by calling OpenAI's GPT with a provided prompt.
 Input: An Object defining a prompt
 Output: The content of GPT's response as text.
@@ -95,7 +95,7 @@ Example:
 ```
 "username": =Text("""Sam""")
 "my_prompting": =Object({"prompt": [{"role": "system", "content": "You are a friendly Texan."}, {"role": "user", "content": "Say hello to {{ username }}."}]})
-"fast_ai": =Gpt('gpt-4-turbo', 'sk-myopenaikey')
+"fast_ai": =Gpt('gpt-4-turbo', '{{ OPENAI_KEY }}')
 "username" -> "my_prompting" -> "fast_ai"
 ```
 8. Table

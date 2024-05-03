@@ -93,7 +93,7 @@ Examples:
 Applying the [] tells SEL that this response element is an array. Data sent here will be appended.
 
 7. Gpt
-`"my_event": =Gpt("<MODEL>", "<OPENAI_KEY>")`
+`"my_event": =Gpt("<MODEL>", "{{ OPENAI_KEY }}")`
 Generate text by calling OpenAI's GPT with a provided prompt.
 Input: An Object defining a prompt
 Output: The content of GPT's response as text.
@@ -101,7 +101,8 @@ Example:
 ```
 "username": =Text("""Sam""")
 "my_prompting": =Object({"prompt": [{"role": "system", "content": "You are a friendly Texan."}, {"role": "user", "content": "Say hello to {{ username }}."}]})
-"fast_ai": =Gpt('gpt-4-turbo', 'sk-myopenaikey')
+# OPENAI_KEY is an environment variable stored in the user's encrypted vault.
+"fast_ai": =Gpt('gpt-4-turbo', "{{ OPENAI_KEY }}")
 "username" -> "my_prompting" -> "fast_ai"
 ```
 
@@ -150,6 +151,7 @@ Examples:
 10.  Proxy
 `"my_event" =Proxy("<CONNECTED_SERVICE>", ["<METHOD>", "<ENDPOINT>"])`
 Make a request that takes advantage of a user's existing Oauth integration, avoiding the need for an API key.
+Valid <CONNECTED_SERVICE>'s: "airtable", "salesforce", "hubspot", "pipedrive", "monday".
 Example:
 ```
 "my_crm_contacts": =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts"])
@@ -190,6 +192,8 @@ When reviewing SEL code, enforce the following rules of good SEL code:
 11th: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
 12th: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
 13th: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
+14th: If connecting to "airtable", "salesforce", "hubspot", "pipedrive", or "monday", use Proxy instead of Request.
+15th: API keys and secrets should be inserted into strings using ex. {{ MY_API_KEY }} to enforce use of env vars for safe storage.
 ------
 
 EXAMPLES OF FULL SEL FILES

@@ -1,0 +1,55 @@
+#!/usesummit/sel/0.1a
+# [ Customer Data Puddle (Livestream) // Puddle all of our various vendor data together to create a high-level, GPT-powered summary. ]
+
+# Model input
+"customer_email": =String("customer@example.com"<email>)
+
+# HubSpot
+"hubspot_ticket_search": =Proxy("hubspot", ["GET", "/crm/v3/objects/tickets"])
+"hubspot_tickets": =Parser("$..updatedAt")
+
+# Stripe
+"customer_query": =Object({"params": {"query": "email:'{{ customer_email }}'<email>"}})
+"customer_search": =Request('get', "https://{{ STRIPE_KEY }}:@api.stripe.com/v1/customers/search")
+"parse_customer_search": =Parser('$.data[0].id')
+"charges_query": =Object({"params": {"query": "customer:'{{ parse_customer_search }}'"}})
+"charges_search": =Request('get', "https://{{ STRIPE_KEY }}:@api.stripe.com/v1/charges/search")
+
+# Postgres / database
+"api_usage": =Table("https://app.databases.com/exports/my_product_usage_data_view.csv")
+"query_for_user": =Query("SELECT * FROM $table WHERE email = '{{ customer_email }}'")
+
+# Intercom
+"intercom_headers": =Object({"headers": {"Authorization": "Bearer {{ INTERCOM_KEY }}", "Intercom-Version": "2.10", "Content-Type": "application/json"}, "json": {"query": {"operator": "=", "field": "email", "value": "{{ customer_email }}"}}})
+"intercom_request": =Request('post', 'https://api.intercom.io/contacts/search')
+"last_replied_at": =Parser('$..last_replied_at')
+"last_seen": =Parser('$..last_seen_at')
+"last_contacted_at": =Parser('$..last_contacted_at')
+
+# GPT
+"summary_data": =Text("""The billing data to summarize: {% for charge in charges_search.data %} Created: {{ charge.created }} Amount: ${{ charge.amount | divided_by: 100 }} {% endfor %}, and the product usage data to summarize: {% for result in query_for_user %} {{ result }} {% endfor %}.  In terms of website and marketing communication activity, as per Intercom: Last seen: {{ last_seen }}, last replied at: {{ last_replied_at }} and last contacted at: {{ last_contacted_at }}.  In terms of support tickets, here are all of the tickets in HubSpot with last updated times: {% for ticket_time in hubspot_tickets %} Updated at: {{ ticket_time }} {% endfor %}""")
+"enriched_prompt": =Object({"prompt": [{"role": "system", "content": "You are a business analyst for a SaaS reviewing accounts.  This customer account needs to be concisely summarized for our customer success team, including subscription, product usage, and contact timing in human-readable date formats."}, {"role": "user", "content": "{{ summary_data }}"}]})
+"gpt_response": =Gpt("gpt-4-turbo", "{{ OPENAI_KEY }}")
+
+# Model response
+"json_response_account_note": =Response("account_note")
+
+# Wire it all together on the canvas.
+"customer_email" -> "hubspot_ticket_search"
+"customer_email" -> "api_usage"
+"customer_email" -> "customer_query"
+"customer_email" -> "intercom_headers"
+"hubspot_ticket_search" -> "hubspot_tickets"
+"customer_query" -> "customer_search"
+"customer_search" -> "parse_customer_search"
+"parse_customer_search" -> "charges_query"
+"charges_query" -> "charges_search"
+"api_usage" -> "query_for_user"
+"charges_search" -> "summary_data"
+"intercom_request" -> "last_replied_at"
+"intercom_request" -> "last_seen"
+"intercom_request" -> "last_contacted_at"
+"summary_data" -> "enriched_prompt"
+"enriched_prompt" -> "gpt_response"
+"intercom_headers" -> "intercom_request"
+"gpt_response" -> "json_response_account_note"
