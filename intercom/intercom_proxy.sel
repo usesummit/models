@@ -1,0 +1,7 @@
+#!/usesummit/sel/0.1a
+# [Contacts list // Basic contacts list. ]
+
+"intercom_request": =Proxy("intercom", ["get", "/contacts"])
+"Response": =Response("debug")
+
+"intercom_request" -> "Response"
