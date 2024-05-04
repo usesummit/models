@@ -18,7 +18,7 @@ When reviewing SEL code, enforce the following rules of good SEL code:
 7th: SQL expressions inside of Query must be supported by SQLite.
 
 8th: Include a model name and description on the first line after the #!, as a comment, like so:
-# [My Model // Fetches data from HubSpot and filers for Google emails.]
+# [My Model // Fetches data from HubSpot and filters for Google emails.]
 
 9th: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
 
