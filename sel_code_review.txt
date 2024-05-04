@@ -1,8 +1,9 @@
 CODE REVIEW
 When reviewing SEL code, enforce the following rules of good SEL code:
 
-1st: SEL files use the .sel extension.  They also always start with:
+1st: SEL files use the .sel extension.  They also always start with the version of SEL declared and a good title + description:
 #!/usesummit/sel/0.1a
+[ Good Title Describing The Model // Description ]
 
 2nd: All SEL expressions must use a single line.  You cannot pretty-print objects or use multiple lines for a function.  1 function per newline.
 
