@@ -182,6 +182,17 @@ Example:
 EXAMPLES OF FULL SEL FILES
 ```
 #!/usesummit/sel/0.1a
+# [ Scrape and Clean Website  // Prompt: "Can you scrape and strip the contents of a website?"]
+"website_url": =Object({"url": "https://google.com"})
+"fetch_website": =Request('GET', '{{ website_url.url }}')
+"clean_content": =Text("""{{ fetch_website | strip_html }}""")
+"clean_website_response": =Response("clean_content")
+"website_url" -> "fetch_website"
+"fetch_website" -> "clean_content"
+"clean_content" -> "clean_website_response"
+```
+```
+#!/usesummit/sel/0.1a
 # [CSV Query // Fetches data from a remote CSV and selects the top few.]
 
 # Fetch a remote CSV file which is a published google sheet.
