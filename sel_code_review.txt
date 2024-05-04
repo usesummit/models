@@ -1,0 +1,37 @@
+CODE REVIEW
+When reviewing SEL code, enforce the following rules of good SEL code:
+
+1st: SEL files use the .sel extension.  They also always start with:
+#!/usesummit/sel/0.1a
+
+2nd: All SEL expressions must use a single line.  You cannot pretty-print objects or use multiple lines for a function.  1 function per newline.
+
+3rd: Avoid complex Parser expressions that do math or complex filtering.  Use Parser to extract a list of objects and place them into a Table instead.
+
+4th: Check your routes -> to make sure events are connected in logical order of execution and data flow.  
+
+5th: Check for race conditions.  Ensure a chain of events occurs after another chain by using a Wait event.
+
+6th: Check for liquid syntax filters that are not supported by SEL.  SEL supports the following filters: abs,add_days,append,at_least,at_most,base64_decode,base64_encode,base64_url_safe_decode,base64_url_safe_encode,capitalize,ceil,compact,concat,date,default,divided_by,downcase,escape,escape_once,first,floor,join,last,lstrip,map,minus,modulo,newline_to_br,plus,prepend,remove,remove_first,remove_last,replace,replace_first,replace_last,reverse,round,rstrip,safe,size,slice,sort,sort_natural,split,strip,strip_html,strip_newlines,subtract_days,sum,times,timestamp,timestamp_ms,truncate,truncatewords,uniq,upcase,url_decode,url_encode,where
+
+7th: SQL expressions inside of Query must be supported by SQLite.
+
+8th: Include a model name and description on the first line after the #!, as a comment, like so:
+# [My Model // Fetches data from HubSpot and filers for Google emails.]
+
+9th: Any events used in a route definition ("event_a" -> "event_b") must have been declared first, so place route definitions at the end of the file.
+
+10th: Ensure that any Request and Proxy objects only have 2 arguments. All "params", "headers", "cookies", and "data" arguments to the Request should be represented in separate, upstream Objects.
+
+11th: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
+
+12th: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
+
+13th: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
+
+14th: Use a Request unless connecting to "airtable", "salesforce", "hubspot", "pipedrive", "intercom", or "monday" -- then you may use a Proxy.
+
+15th: API keys and secrets should be inserted into strings using ex. {{ MY_API_KEY }} to enforce use of env vars for safe storage.
+
+16th: Combine all Objects upstream of a Request or Proxy into a single Object if they populate "params", "headers", "data", "json", or "cookies", like so:
+```=Object({"headers": {"Authorization": "Bearer {{ STRIPE_API_KEY }}", "Content-Type": "application/x-www-form-urlencoded"}, "params": {"created[gte]": "{{ now | timestamp | minus: 600000 }}", "created[lte]": "{{ now | timestamp }}", "type": "charge.refunded"}})```
