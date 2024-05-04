@@ -192,8 +192,10 @@ When reviewing SEL code, enforce the following rules of good SEL code:
 11th: If a Text event spans multiple lines, the lines after the first must be indented and the final line should be `"""`.
 12th: Ensure all uses of Gpt are preceded by an upstream Object that defines the prompt.
 13th: If you're trying to split a string into an array, try to use Matches, not Text (liquid syntax).
-14th: If connecting to "airtable", "salesforce", "hubspot", "pipedrive", or "monday", use Proxy instead of Request.
+14th: Use a Request unless connecting to "airtable", "salesforce", "hubspot", "pipedrive", "intercom", or "monday" -- then you may use a Proxy.
 15th: API keys and secrets should be inserted into strings using ex. {{ MY_API_KEY }} to enforce use of env vars for safe storage.
+16th: Combine all Objects upstream of a Request or Proxy into a single Object if they populate "params", "headers", "data", "json", or "cookies", like so:
+```=Object({"headers": {"Authorization": "Bearer {{ STRIPE_API_KEY }}", "Content-Type": "application/x-www-form-urlencoded"}, "params": {"created[gte]": "1714587733", "created[lte]": "1714760533", "type": "charge.refunded"}})```
 ------
 
 EXAMPLES OF FULL SEL FILES
@@ -216,7 +218,6 @@ EXAMPLES OF FULL SEL FILES
 ```
 #!/usesummit/sel/0.1a
 # [ Breckenridge Weather Forecast  // Prompt: "Can you build a weather forecasting API for Breckenridge, Colorado?  Please use data from the National Weather Service."]
-
 "weather_params": =Object({"url": "https://api.weather.gov/gridpoints/BOU/62,105/forecast"})
 "fetch_weather": =Request('get', '{{ weather_params.url }}')
 "parse_forecast": =Parser('$.properties.periods[*]')
@@ -291,4 +292,16 @@ EXAMPLES OF FULL SEL FILES
 "total_leads_response": =Response("total_leads_count")
 "parse_total_contacts" -> "total_leads_response"
 ```
-
+```
+#!/usesummit/sel/0.1a
+# [ Stripe Chargeback Report  // Prompt: "How many chargebacks have we had through Stripe this month?  Use the Stripe API."]
+# Single Object for query params and headers
+"stripe_chargebacks_query": =Object({"headers": {"Authorization": "Bearer {{ STRIPE_API_KEY }}", "Content-Type": "application/x-www-form-urlencoded"}, "params": {"created[gte]": "1714587733", "created[lte]": "1714760533", "type": "charge.refunded"}})
+"fetch_stripe_chargebacks": =Request("get", "https://api.stripe.com/v1/events")
+"parse_chargebacks_count": =Parser("$.data | size")
+"chargebacks_response": =Response("chargebacks_count")
+"stripe_chargebacks_query" -> "fetch_stripe_chargebacks"
+"fetch_stripe_chargebacks" -> "parse_chargebacks_count"
+"fetch_stripe_chargebacks" -> "chargebacks_response"
+"parse_chargebacks_count" -> "chargebacks_response"
+```
