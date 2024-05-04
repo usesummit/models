@@ -1,0 +1,30 @@
+#!/usesummit/sel/0.1a
+# [HubSpot Companies Search // Search for companies by industry and name]
+
+# Define the search parameters using a JSON object for querying companies
+"company_search_params": =Object({
+  "filterGroups": [{
+    "filters": [{
+      "propertyName": "industry",
+      "operator": "EQ",
+      "value": "Technology"  // Search for companies in the Technology industry
+    },
+    {
+      "propertyName": "name",
+      "operator": "CONTAINS",
+      "value": "OpenAI"  // Search for companies that contain 'OpenAI' in their name
+    }]
+  }],
+  "properties": ["name", "industry", "website"],  // Properties to retrieve
+  "limit": 10  // Limit the number of results
+})
+
+# Use a Proxy to handle the search request, utilizing HubSpot's built-in OAuth
+"search_companies": =Proxy('hubspot', ["post", "/crm/v3/objects/companies/search"])
+
+# Setup a Response to output the search results
+"company_search_response": =Response("companies")
+
+# Define the routing between the search parameters, the proxy request, and the response
+"company_search_params" -> "search_companies"
+"search_companies" -> "company_search_response"
