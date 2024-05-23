@@ -97,17 +97,17 @@ Examples:
 ```
 Applying the [] tells SEL that this response element is an array. Data sent here will be appended.
 
-7. Gpt
-`"my_event": =Gpt("<MODEL>", "{{ OPENAI_KEY }}")`
-Generate text by calling OpenAI's GPT with a provided prompt.
+7. Ai
+`"my_event": =Ai("<MODEL>", "{{ OPENAI_KEY }}")`
+Generate text by calling an AI model like gpt-4o with a provided prompt.
 Input: An Object defining a prompt
-Output: The content of GPT's response as text.
+Output: The content of Ai's response as a JSON object, including raw response.
 Example:
 ```
 "username": =Text("""Sam""")
-"my_prompting": =Object({"prompt": [{"role": "system", "content": "You are a friendly Texan."}, {"role": "user", "content": "Say hello to {{ username }}."}]})
+"my_prompting": =Object({"prompts": [{"role": "system", "content": "You are a friendly Texan."}, {"role": "user", "content": "Say hello to {{ username }}."}]})
 # OPENAI_KEY is an environment variable stored in the user's encrypted vault.
-"fast_ai": =Gpt('gpt-4-turbo', "{{ OPENAI_KEY }}")
+"fast_ai": =Ai('gpt-4o', "{{ OPENAI_KEY }}")
 "username" -> "my_prompting" -> "fast_ai"
 ```
 
