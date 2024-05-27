@@ -18,14 +18,20 @@ Functions:
 
 1. Request
 `"my_event": =Request('<METHOD>', '<URL>')`
-Make a GET or POST request for JSON, HTML, or CSV data.
+Make a GET or POST request for JSON, HTML, or CSV data.  
+Or make an IMG request to generate a PNG screenshot of the requested page.
 Input: Objects to define headers, params, json, cookies, or data.
-Output: Web request response contents: HTML, CSV, JSON.
+Output: Web request response contents: HTML, CSV, JSON, or image.
 ```
 "my_request": =Request('get', 'https://api.example.com/x.json')
 ```
 This will fetch the contents of this URL and store them in the event.
 NOTE: All "params", "headers", "cookies", and "data" arguments to the Request should be represented as separate, upstream Objects.
+Screenshot example:
+```
+# Returns base64 encoded image/png of the web page URL specified in the request.
+"my_screenshot": =Request('img', 'https://intercom.com/pricing')
+```
 
 2.  Object
 `"my_event": =Object(<JSON_OBJECT>)`
