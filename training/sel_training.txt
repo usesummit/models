@@ -40,8 +40,19 @@ Input: None, statically defined. You may use liquid syntax within string element
 Output: The object as a dictionary.
 Examples:
 ```
-"my_preference": =Object({"warm": true, "cold": false})
+# Generic JSON object.
 "my_foo": =Object({"attr": 1, "bar": [1, 2, 3]})
+
+# Prompt for =Ai('pdf')
+=Object({"prompts": [{"role": "user", "content": "what supplies are needed for 4th graders? Please respond as a JSON list called supplies"}],
+    "attachments": ["https://drive.google.com/file/d/1dxxa3iwJsjLOYhhXq7XQZ8FpzoBjdLgT/view?usp=drive_link"]
+})
+
+# Enriched prompt for GPT
+=Object({"cache_duration": 600, "prompts": [{"role": "user", "content": "Why do people love Austin, TX?  Be concise, this needs to fit into a couple of tweets.  Please consider: {{ atx_restaurants.answer | strip_newlines | escape }}"}]})
+
+# {{ screenshot }} is the liquid syntax reference to the event title of the Request('img', 'https://...') event used to capture the image.
+"my_screenshot_prompt": =Object({"prompts": [{"role": "user", "content": [{"type": "text", "text": "Can you summarize the pricing on this page and return it as a JSON object called pricing?"},{"type": "image_url", "image_url": {"url": "data:image/png;base64,{{ screenshot }}"}}]}]})
 ```
 An Object event will send the object it contains downstream. This makes it a common upstream partner to Parser and Request.  Example:
 ```
