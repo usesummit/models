@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ CSV Row Counter // Count the number of rows in a CSV file. ]
+
+# Fetch a CSV file from a URL and store its data.
+"csv_data": =Table('https://example.com/data.csv'<csv_url>)
+
+# Count the number of rows in the fetched CSV file.
+"row_count": =Query("SELECT COUNT(*) as count FROM $table")
+
+# Store the row count in the Response event.
+"row_count_response": =Response("row_count")
+
+# Use the CSV data to count the rows.
+"csv_data" -> "row_count"
+
+# Use the row count for the response.
+"row_count" -> "row_count_response"

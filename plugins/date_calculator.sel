@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Date Calculator // Calculate a date X days in the past or future. ]
+
+# Create an object with the number of days to add (or subtract if negative).
+"days_offset": =Object({"days": 7<days_from_now>})
+
+# Calculate the date that is 7 days from today.
+"new_date": =Object({"timestamp": "{{ 'now' | add_days: days_offset.days }}"})
+
+# Store the calculated date in the Response event.
+"response": =Response("date")
+
+# Use the days offset to calculate the new date.
+"days_offset" -> "new_date"
+
+# Use the calculated date for the response.
+"new_date" -> "response"

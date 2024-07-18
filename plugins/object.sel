@@ -1,0 +1,6 @@
+#!/usesummit/sel/0.1a
+# [ Object // A JSON Object that can be used to represent data in your model.  ]
+
+
+# Just your average JSON object ready to hold data.
+"Object": =Object({"params": {"power": true}})

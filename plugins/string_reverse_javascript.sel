@@ -1,0 +1,21 @@
+#!/usesummit/sel/0.1a
+# [ String Reverser (JavaScript) // Reverse a given string using JavaScript. ]
+
+# Create a text object with a sample string.
+"input_string": =Text("Summit"<input_text>)
+
+# Execute JavaScript code to reverse the string.
+"reversed_string": =Code(```javascript
+const str = "{{ input_string }}";
+const reversedStr = str.split("").reverse().join("");
+console.log(reversedStr);
+```)
+
+# Store the reversed string in the Response event.
+"reversed_string_response": =Response("reversed_string")
+
+# Use the input string to get the reversed string.
+"input_string" -> "reversed_string"
+
+# Use the reversed string for the response.
+"reversed_string" -> "reversed_string_response"

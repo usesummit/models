@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Substring Extractor // Extract a substring from a given string. ]
+
+# Create a text object with a sample string.
+"full_text": =Text("""Hello, world!"""<input_text>)
+
+# Extract a substring from the text (e.g., 'world').
+"substring": =Text("""{{ full_text | slice: 7, 5 }}""")
+
+# Store the extracted substring in the Response event.
+"substring_response": =Response("extracted_substring")
+
+# Use the full text to extract the substring.
+"full_text" -> "substring"
+
+# Use the extracted substring for the response.
+"substring" -> "substring_response"

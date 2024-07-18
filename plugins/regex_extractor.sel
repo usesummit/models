@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Regex Extractor // Extract data matching a regex pattern from a string. ]
+
+# Create a text object with a sample sentence.
+"input_text": =Text("""Contact us at support@example.com or visit our website."""<input_text>)
+
+# Find and extract any email addresses in the text.
+"email_extractor": =Matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
+
+# Store the extracted email addresses in the Response event.
+"email_extractor_response": =Response("extracted_emails")
+
+# Use the input text to find email addresses.
+"input_text" -> "email_extractor"
+
+# Use the extracted email addresses for the response.
+"email_extractor" -> "email_extractor_response"

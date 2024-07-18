@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ Current DateTime // Fetch the current date and time. ]
+
+# Create an object with the current date and time formatted as 'YYYY-MM-DDTHH:MM:SS'.
+"current_datetime": =Object({"timestamp": "{{ 'now' | date: '%Y-%m-%dT%H:%M:%S' }}"})
+
+# Store the current date and time in the Response event.
+"current_datetime_response": =Response("current_datetime")
+
+# Use the current date and time for the response.
+"current_datetime" -> "current_datetime_response"

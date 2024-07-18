@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Model Run // Allows you to call one of your Summit models from another without needing an API key. ]
+
+
+# Parameters the Summit model takes as arguments.
+"model_args": =Object({"cache_duration": 86400,
+  "params": {
+    "arg_1": 1981,
+    "arg_2": 11,
+    "arg_3": "Miami"
+  }
+})
+
+# Call one of your Summit model's from another. Get the URL argument from "Endpoints."
+"model_run": =Proxy("summit", ["post", "/abcde/my-summit-model/data"<model_endpoint>])
+
+"model_args" -> "model_run"

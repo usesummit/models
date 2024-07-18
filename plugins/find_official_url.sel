@@ -1,0 +1,27 @@
+#!/usesummit/sel/0.1a
+# [ Find URL // Search Google and return the first URL result. ]
+
+# Return the top result.
+"extract_result": =String("{{ google_search.organic_results[0] }}")
+
+# Prepare the response to include the GPT result
+"search_results": =Response("results[]")
+
+# Define the company details with name and domain
+"company": =Object({
+  "cache_duration": 86400,
+  "keywords": "wizard of oz"<keywords>,  
+  "domain": ""<search_domain>  
+})
+
+# Run a Google search and return the organic results.
+"google_search": =Search("site:{{ search_domain }} {{ keywords }}", "google")
+
+# Keywords to use in the search query.
+"keywords": =String(""<keywords>)
+
+"extract_result" -> "search_results"
+"company" -> "google_search"
+"google_search" -> "extract_result"
+"google_search" -> "search_results"
+"keywords" -> "company"

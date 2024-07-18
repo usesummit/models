@@ -1,0 +1,14 @@
+#!/usesummit/sel/0.1a
+# [ Current Date and Time (Ruby) // Fetch the current date and time using Ruby. ]
+
+# Execute Ruby code to get the current date and time.
+"current_datetime": =Code(```ruby
+require 'date'
+puts DateTime.now.to_s
+```)
+
+# Store the current date and time in the Response event.
+"current_datetime_response": =Response("current_datetime")
+
+# Use the current date and time for the response.
+"current_datetime" -> "current_datetime_response"

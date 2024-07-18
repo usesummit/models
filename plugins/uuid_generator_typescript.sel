@@ -1,0 +1,19 @@
+#!/usesummit/sel/0.1a
+# [ UUID Generator (TypeScript) // Generate a UUID using TypeScript. ]
+
+# Execute TypeScript code to generate a UUID.
+"uuid": =Code(```typescript
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+console.log(generateUUID());
+```)
+
+# Store the generated UUID in the Response event.
+"uuid_response": =Response("generated_uuid")
+
+# Use the generated UUID for the response.
+"uuid" -> "uuid_response"

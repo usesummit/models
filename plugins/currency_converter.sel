@@ -1,0 +1,26 @@
+#!/usesummit/sel/0.1a
+# [ Currency Converter // Convert an amount from one currency to another.  Requires Exchange Rate API key: https://www.exchangerate-api.com/
+
+# Create an object with the amount to convert and the target currency.
+"conversion_info": =Object({"amount": 100<currency_amount>, "target_currency": "EUR"<target_currency_code>, "source_currency": "USD"<source_currency_code>})
+
+# Fetch exchange rate key from your vault.  Get an Exchange Rate key here: https://www.exchangerate-api.com/
+"api_key": =Object({"key": "{{ EXCHANGERATE_API_KEY }}"})
+
+# Make a request to a currency conversion API using the API key.
+"convert_currency": =Request('get', 'https://v6.exchangerate-api.com/v6/{{ api_key.key }}/latest/{{ conversion_info.source_currency }}')
+
+# Parse the conversion rate from the API response.
+"conversion_rate": =Parser("$.conversion_rates.{{ conversion_info.target_currency }}")
+
+# Calculate the converted amount.
+"converted_amount": =Object({"amount": "{{ conversion_info.amount | times: conversion_rate[0] }}"})
+
+# Store the converted amount in the Response event.
+"converted_amount_response": =Response("converted_amount")
+
+"conversion_info" -> "convert_currency"
+"api_key" -> "convert_currency"
+"convert_currency" -> "conversion_rate"
+"conversion_rate" -> "converted_amount"
+"converted_amount" -> "converted_amount_response"

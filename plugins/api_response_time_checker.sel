@@ -1,0 +1,28 @@
+#!/usesummit/sel/0.1a
+# [ API Response Time Checker // Check the response time of an API endpoint. ]
+
+# Create an object with the API URL.
+"url": =String("https://api.example.com/data"<url>)
+
+# Measure the response time of the API request.
+"measure_response_time": =Code(```
+python
+import time
+import requests
+
+start_time = time.time()
+response = requests.get("{{ url }}")
+end_time = time.time()
+
+response_time = end_time - start_time
+print(response_time)
+```)
+
+# Store the measured response time in the Response event.
+"response_time_result": =Response("response_time")
+
+# Use the API URL to measure the response time.
+"api_url" -> "measure_response_time"
+
+# Use the code block to get the response time and store it.
+"measure_response_time" -> "response_time_result"

@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ Text //  Compose text, optionally using liquid syntax. ]
+
+# To compose a block of text.
+"text_block": =Text("""Hello, {{ subject }}!""")
+
+# Store the composed text block in the Response event.
+"text_block_response": =Response("composed_text")
+
+# Use the composed text for the response.
+"text_block" -> "text_block_response"

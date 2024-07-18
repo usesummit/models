@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ Request // Add a web request. ]
+
+# Define a request to fetch data from the specified URL using the GET method.
+"request": =Request("get"<method>, "https://jsonplaceholder.typicode.com/users"<url>)
+
+# Store the response from the web request.
+"response": =Response("results")
+
+# Link the request to the response to ensure the response event processes the output of the request event.
+"request" -> "response"

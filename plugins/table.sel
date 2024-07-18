@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Table // Fetch a CSV and place into an in-memory database to query. ]
+
+# Your CSV becoming an in-memory SQLite table.
+"table": =Table("https://sheets.google.com/public_csv_endpoint"<data_url>)
+
+# A query to run on the table.
+"query": =Query("SELECT * FROM $table")
+
+"table" -> "query"

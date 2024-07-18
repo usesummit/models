@@ -1,0 +1,26 @@
+#!/usesummit/sel/0.1a
+# [ Find Archived Page // Retrieve the closest archived page for a given URL and timestamp ]
+
+# Define the URL and timestamp for which we want to find an archived page
+"url_prior": =Object({
+  "cache_duration": 86400,
+  "params": {
+    "url": "usesummit.com"<url>,  
+    "timestamp": "20231001"<date> 
+  },
+  "sleep": 2
+})
+
+# Ping Wayback Machine to get the closest archived page to the given timestamp
+"wayback": =Request('get', "http://archive.org/wayback/available")
+
+# Parse the response to extract the closest archived URL
+"extract_url": =Parser('$..closest')
+
+# Prepare the response to include the extracted URL
+"response": =Response("url")
+
+# Logical flow: Connect the events to define the order of execution and data flow
+"url_prior" -> "wayback"
+"wayback" -> "extract_url"
+"extract_url" -> "response"

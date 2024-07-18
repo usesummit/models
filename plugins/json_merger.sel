@@ -1,0 +1,31 @@
+#!/usesummit/sel/0.1a
+# [ JSON Merger // Merge two JSON objects into one. ]
+
+# Create the first JSON object with sample data.
+"json_object1": =Object({"first_name": "Alice"})
+
+# Create the second JSON object with sample data.
+"json_object2": =Object({"last_name": "Smith"})
+
+# Merge the two JSON objects into one using Python.
+"merge_json": =Code(```python
+import json
+
+json_object1 = {{ json_object1 }}
+json_object2 = {{ json_object2 }}
+
+merged_json = {**json_object1, **json_object2}
+print(json.dumps(merged_json))
+```)
+
+# Store the merged JSON object in the Response event.
+"merged_json_response": =Response("merged_json")
+
+# Use the first JSON object to merge with the second.
+"json_object1" -> "merge_json"
+
+# Use the second JSON object to merge with the first.
+"json_object2" -> "merge_json"
+
+# Use the merged JSON for the response.
+"merge_json" -> "merged_json_response"

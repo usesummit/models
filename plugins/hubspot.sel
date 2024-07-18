@@ -1,0 +1,9 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot // Call the HubSpot API using your authenticated connection. ]
+
+
+"hubspot": =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts"<hubspot_endpoint>])
+
+"extract_emails": =Parser("$..email"<selector>)
+
+"hubspot" -> "extract_emails"
