@@ -4,7 +4,9 @@ Because no-code needs open-source libraries.
 Models can be imported into Summit as plaintext [using the import feature](https://usesummit.com/e/boards/import).
 
 ## How model files are organized
-Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.  All of the models that are offered as by clicking `+ Add New` in the Summit IDE are listed under `plugins`.
+Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.  
+
+All of the models that are offered as by clicking `+ Add New` in the Summit IDE are listed under `plugins`.
 
 ## Preface
 This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We recently began the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute, such as our **dedicated GPT's for learning SEL** [data scripting](https://chat.openai.com/g/g-YpIHKpk8j-summit-event-language-data-scripting) and [simulations](https://chat.openai.com/g/g-CErkEZwxr-summit-event-language-simulations).
