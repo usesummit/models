@@ -1,5 +1,5 @@
 # Summit Models
-Because no-code needs open-source libraries.
+Because no-code/low-code needs open-source libraries!
 
 Models can be imported into Summit as plaintext [using the import feature](https://usesummit.com/e/boards/import).
 
