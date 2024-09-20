@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ Pipedrive: Update Company // Update a company record in Pipedrive using your authorized connection. ]
+
+# Updated attributes.
+"update_config": =Object({
+ "record_id": 123456789,
+ "data": {
+ "name": "Gotham Enterprises"
+ }
+})
+
+# Call to Pipedrive to update the company (organization).
+"company": =Proxy("pipedrive", ["PUT", "/v1/organizations/{{ update_config.record_id }}"])
+
+"update_config" -> "company"

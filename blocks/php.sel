@@ -1,0 +1,12 @@
+#!/usesummit/sel/0.1a
+# [ PHP // Code block for PHP. ]
+
+# echo statements will be the output of this block.
+"php": =Code(```php
+<?php
+$number1 = 1;
+$number2 = 4;
+echo $number1 + $number2;
+?>
+```)
+

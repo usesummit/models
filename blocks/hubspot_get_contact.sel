@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot: Get Contact // Fetch a contact record from HubSpot using your authorized connection. ]
+
+# Properties to retrieve.
+"get_config": =Object({
+  "record_id": 123456789,
+  "params": {
+    "properties": "firstname,lastname,email,phone,company,lifecyclestage,createdate,lastmodifieddate"
+  }
+})
+
+# Call to HubSpot to retrieve the contact.
+"contact": =Proxy("hubspot", ["GET", "/crm/v3/objects/contacts/{{ get_config.record_id }}"])
+
+"get_config" -> "contact"

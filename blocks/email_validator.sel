@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ Email Validator // Validate an email address format. ]
+
+# Create a text object with an email address.
+"email_address": =String("example@example.com"<email_address>)
+
+# Validate the email address format using regex.
+"validate_email": =Matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+
+# Use the email address to validate its format.
+"email_address" -> "validate_email"

@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Web Scraper // Extract HTML elements from a web page. ]
+
+# Page to scrape.
+"page": =Request("get", "https://usesummit.com"<url>)
+
+# Scraping instructions for the request.
+"scrape_instruct": =Object({"scrape": {"headers":{"selector":"h1"<css_selector>, "type": "list"}}})
+
+"scrape_instruct" -> "page"

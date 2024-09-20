@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ PDF Data Extraction // Upload a PDF and extract structured data using AI. ]
+
+"pdf": =Ai("pdf")
+
+#
+"Object": =Object({"prompts": [{"role": "user", "content": "what supplies are needed for 4th graders? Please respond as a JSON list called supplies"<prompt>}],
+    "attachments": ["https://drive.google.com/file/d/1dxxa3iwJsjLOYhhXq7XQZ8FpzoBjdLgT/view?usp=drive_link"<pdf_url>]
+})
+
+"Object" -> "pdf"

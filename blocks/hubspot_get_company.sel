@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot: Get Company // Fetch a company record from HubSpot using your authorized connection. ]
+
+# Properties to retrieve for a company.
+"get_config": =Object({
+  "record_id": 987654321,
+  "params": {
+    "properties": "name,domain,industry,phone,city,state,country,createdate,lastmodifieddate"
+  }
+})
+
+# Call to HubSpot to retrieve the company.
+"company": =Proxy("hubspot", ["GET", "/crm/v3/objects/companies/{{ get_config.record_id }}"])
+
+"get_config" -> "company"

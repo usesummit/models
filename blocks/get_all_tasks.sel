@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Get All Tasks // Fetch and optionally filter all of your scheduled tasks. ]
+
+# # SQL query to retrieve all tasks.
+"select_tasks": =Query("""select * from tasks""")
+
+# Connection to database.
+"db": =Storage("database")
+
+"select_tasks" -> "db"

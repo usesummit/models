@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Get Opportunity // Fetch an opportunity record from Salesforce using your authorized connection.]
+
+# Properties to retrieve.
+"get_config": =Object({
+ "record_id": "006xx000003DHPdAAO",  # Salesforce Opportunity ID
+ "params": {
+   "fields": "Name,Amount,StageName"
+ }
+})
+
+# Call to Salesforce to retrieve the opportunity. Replace vXX.X with the appropriate Salesforce API version (e.g., v57.0).
+"opportunity": =Proxy("salesforce", ["GET", "/services/data/vXX.X/sobjects/Opportunity/{{ get_config.record_id }}?fields={{ get_config.params.fields }}"])
+
+"get_config" -> "opportunity"

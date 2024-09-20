@@ -1,0 +1,9 @@
+#!/usesummit/sel/0.1a
+# [ Ruby // Code block for Ruby. ]
+
+# puts statements will be the output of this block.
+"current_datetime": =Code(```ruby
+require 'date'
+puts DateTime.now.to_s
+```)
+

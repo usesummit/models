@@ -1,0 +1,5 @@
+#!/usesummit/sel/0.1a
+# [ Text //  Compose text, optionally using liquid syntax. ]
+
+# To compose a block of text.
+"text_block": =Text("""Hello, {{ subject }}!""")

@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Get Contact // Fetch a contact record from Salesforce using your authorized connection.]
+
+# Properties to retrieve.
+"get_config": =Object({
+ "record_id": "003xx000004TmiUAAS",  # Salesforce Contact ID
+ "params": {
+   "fields": "FirstName,LastName,Email,Phone,AccountId,LifecycleStage__c,CreatedDate,LastModifiedDate"
+ }
+})
+
+# Call to Salesforce to retrieve the contact. Replace vXX.X with the appropriate Salesforce API version (e.g., v57.0).
+"contact":=Proxy("salesforce", ["GET", "/services/data/vXX.X/sobjects/Contact/{{ get_config.record_id }}"])
+
+"get_config" -> "contact"

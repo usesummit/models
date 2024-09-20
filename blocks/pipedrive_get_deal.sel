@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ Pipedrive: Get Deal // Fetch a deal record from Pipedrive using your authorized connection. ]
+
+# Properties to retrieve for the deal.
+"get_config": =Object({
+ "record_id": 987654321,
+ "params": {
+ "fields": "title,value,stage_id"
+ }
+})
+
+# Call to Pipedrive to retrieve the deal.
+"deal": =Proxy("pipedrive", ["GET", "/v1/deals/{{ get_config.record_id }}?fields={{ get_config.params.fields }}"])
+
+"get_config" -> "deal"

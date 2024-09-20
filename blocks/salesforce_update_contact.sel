@@ -1,0 +1,16 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Update Contact // Update a contact record in Salesforce using your authorized connection.]
+
+# Updated attributes.
+"update_config": =Object({
+ "record_id": "003xx000004TmiUAAS",  # Salesforce Contact ID
+ "data": {
+   "FirstName": "Bruce",
+   "LastName": "Wayne"
+ }
+})
+
+# Call to Salesforce to update the contact. Replace vXX.X with the actual Salesforce API version, such as v57.0.
+"contact": =Proxy("salesforce", ["PATCH", "/services/data/vXX.X/sobjects/Contact/{{ update_config.record_id }}"])
+
+"update_config" -> "contact"

@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Parse An Inbound Email // Parse data out of an inbound email trigger. ]
+
+# Plain text of the inbound email body.
+"inbound_email": =Object({
+   "plain_body": "{{ webhook.body.plain }}",
+   "html_body": "{{ webhook.body.html }}",
+   "to": "{{ webhook.body.to }}",
+   "subject": "{{ webhook.body.subject }}"
+})

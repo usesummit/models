@@ -1,0 +1,19 @@
+#!/usesummit/sel/0.1a
+# [ Spreadsheet Filter // Fetch a CSV (e.g., a public Google Sheets URL), then filter it using SQL queries. ]
+
+
+# The value to be found in the selected column.
+"filter_criteria": =String("Confirmed"<value>)
+
+#
+"filtered_data": =Query("SELECT * FROM $table WHERE status = 'Confirmed'")
+
+# URL location of the CSV to be analyzed.
+"google_sheet_data": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vQiY_h8G_eua6XI8zHymFCA0AOtni5x-s6y3fSGzSMJobkx-OG5jggmaqe654OiHTrL9O52k-ADU9Fs/pub?gid=0&single=true&output=csv"<csv_url>)
+
+# The column name containing the data in the filter criteria.
+"column_name": =String("status"<column>)
+
+"filter_criteria" -> "filtered_data"
+"google_sheet_data" -> "filtered_data"
+"column_name" -> "filter_criteria"

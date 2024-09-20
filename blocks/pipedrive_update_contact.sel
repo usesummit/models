@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ Pipedrive: Update Contact // Update a contact record in Pipedrive using your authorized connection. ]
+
+# Updated attributes.
+"update_config": =Object({
+ "record_id": 123456789,
+ "data": {
+ "name": "Bruce Wayne"
+ }
+})
+
+# Call to Pipedrive to update the contact (person).
+"contact": =Proxy("pipedrive", ["PUT", "/v1/persons/{{ update_config.record_id }}"])
+
+"update_config" -> "contact"

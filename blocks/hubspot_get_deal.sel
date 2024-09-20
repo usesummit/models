@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot: Get Deal // Fetch a deal record from HubSpot using your authorized connection. ]
+
+# Properties to retrieve.
+"get_config": =Object({
+  "record_id": 987654321,
+  "params": {
+    "properties": "dealname,amount,dealstage"
+  }
+})
+
+# Call to HubSpot to retrieve the deal.
+"deal": =Proxy("hubspot", ["GET", "/crm/v3/objects/deals/{{ get_config.record_id }}?properties={{ get_config.params.properties }}"])
+
+"get_config" -> "deal"

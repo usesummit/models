@@ -1,0 +1,19 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Update Opportunity // Update an opportunity record in Salesforce using your authorized connection.]
+
+# Updated attributes for the opportunity.
+"update_config": =Object({
+ "record_id": "006xx000003DHPdAAO",  # Salesforce Opportunity ID
+ "data": {
+   "Name": "Wayne Enterprises Purchase",
+   "Amount": 1000000,
+   "StageName": "Closed Won",
+   "CloseDate": "{{ 'now' | date: '%Y-%m-%d' }}",
+   "Pipeline__c": "default"  # Assuming 'Pipeline' is a custom field in Salesforce.
+ }
+})
+
+# Call to Salesforce to update the opportunity. Replace vXX.X with the actual Salesforce API version you are using, such as v57.0.
+"opportunity": =Proxy("salesforce", ["PATCH", "/services/data/vXX.X/sobjects/Opportunity/{{ update_config.record_id }}"])
+
+"update_config" -> "opportunity"

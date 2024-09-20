@@ -1,0 +1,5 @@
+#!/usesummit/sel/0.1a
+# [ Retrieve An Object // Fetch an object from your persistent key-value store. ]
+
+# The key of the object you'd like to retrieve.
+"stored_object": =Storage("my_key")

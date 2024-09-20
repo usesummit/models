@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Store An Object // Store an object in your persistent key-value store. ]
+
+# The JSON object you want to store.
+"object_to_store": =Object({"example": true})
+
+# Key to store the object in the kv_store table.
+"kv_store": =Storage("my_key")
+
+"object_to_store" -> "kv_store"

@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Query The Database // Run a query on Summit's built-in persistent storage database. ]
+
+# SQL query to run.
+"select": =Query("""select * from my_table""")
+
+# Connection to database.
+"db": =Storage("database")
+
+"select" -> "db"

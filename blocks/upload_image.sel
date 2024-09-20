@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Upload Image // Get an image and send it to cloud-based storage. ]
+
+# Get an image.
+"image": =Request("get", "https://www.example.com/my_image.png")
+
+# Upload to CDN.
+"upload": =Storage("upload")
+
+"image" -> "upload"

@@ -1,0 +1,5 @@
+#!/usesummit/sel/0.1a
+# [ Airtable Fetch //  Pull records from an Airtable into a Summit model. ]
+
+# Fetch data from Airtable.  Connect under "Account" > "Integrations".
+"fetch_airtable_data": =Proxy("airtable", ["get", "/v0/app8HfSKLfIKJJx5c/tbluK2mJeZyU4a829"<airtable_endpoint>])

@@ -1,0 +1,7 @@
+#!/usesummit/sel/0.1a
+# [ JavaScript // Code block for JavaScript. ]
+
+# console.log statements will be the output of this block.
+"javascript_stdout": =Code(```javascript
+console.log("Hello from JS.");
+```)

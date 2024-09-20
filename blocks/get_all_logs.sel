@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Get All Logs // Fetch and optionally filter all of the logs from your model runs. ]
+
+# SQL query to retrieve all logs.
+"select_logs": =Query("""select * from logs""")
+
+# Connection to database.
+"db": =Storage("database")
+
+"select_logs" -> "db"

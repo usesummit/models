@@ -1,6 +1,0 @@
-#!/usesummit/sel/0.1a
-# [ Query // Use SQL style queries to get data out of a table ]
-
-
-# Select data out of an upstream Table.
-"query": =Query("SELECT * FROM $table LIMIT 5"<sql_query>)

@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Get Account // Fetch an account record from Salesforce using your authorized connection.]
+
+# Properties to retrieve for an account.
+"get_config": =Object({
+ "record_id": "001xx000003DHPdAAO",
+ "params": {
+ "fields": "Name,Website,Industry,Phone,BillingCity,BillingState,BillingCountry,CreatedDate,LastModifiedDate"
+ }
+})
+
+# Call to Salesforce to retrieve the account. Replace vXX.X with the version of the Salesforce API you're using (e.g., v57.0).
+"account": =Proxy("salesforce", ["GET", "/services/data/vXX.X/sobjects/Account/{{ get_config.record_id }}"])
+
+"get_config" -> "account"

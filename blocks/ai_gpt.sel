@@ -1,0 +1,11 @@
+#!/usesummit/sel/0.1a
+# [ GPT // Call GPT using a prompt object. ]
+
+
+# This provides GPT with the context it needs to run.  Notice the search results are injected into the prompt using {{ liquid_syntax }}.
+"prompt": =Object({"cache_duration": 600, "prompts": [{"role": "user", "content": "Why do people love Austin, TX?  Be concise, this needs to fit into a couple of tweets."<prompt>}]})
+
+# Calls your preferred GPT model with the enriched prompt passed in.
+"gpt": =Ai("gpt-4o"<model>)
+
+"prompt" -> "gpt"

@@ -1,0 +1,5 @@
+#!/usesummit/sel/0.1a
+# [ Search // Search the web and return and summarize the first 5 results. ]
+
+# Run a web search, returning an answer, relevant URL's, and snippets of those sources.
+"web_search": =Search("What are some great restaurants in Austin, TX?"<search_input>)

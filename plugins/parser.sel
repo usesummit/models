@@ -1,5 +1,0 @@
-#!/usesummit/sel/0.1a
-# [ Parser // Pull specific values from an Object. ]
-
-
-"extract_values": =Parser("$..foo"<selector>)

@@ -1,0 +1,5 @@
+#!/usesummit/sel/0.1a
+# [ Catch A Webhook // Parse data out of an inbound webhook's body. ]
+
+# Example reference to a text property of the incoming webhook.body.
+"webhook_data": =Object({"data": "{{ webhook.body.my_data_attr }}"})

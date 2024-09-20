@@ -1,5 +1,0 @@
-#!/usesummit/sel/0.1a
-# [ Response Data // Create or append data to this model's JSON response. ]
-
-
-"response": =Response("results"<response_key>)

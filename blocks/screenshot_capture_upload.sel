@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ Screenshot Capture & Upload // Capture a screenshot of a webpage and upload it to cloud storage. ]
+
+# Define configuration settings for the request
+"config": =Object({
+  "cache_duration": 0 
+})
+
+# Take a snapshot of the specified webpage
+"screenshot": =Request("img", "https://usesummit.com"<screenshot_url>) 
+
+# Upload the captured screenshot to cloud storage
+"storage": =Storage("upload") 
+
+# Logical flow: Connect the events to define the order of execution and data flow
+"config" -> "screenshot"
+"screenshot" -> "storage"

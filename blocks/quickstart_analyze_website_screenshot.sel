@@ -1,0 +1,47 @@
+#!/usesummit/sel/0.1a
+# [ Analyze Website Screenshot // Analyze a screenshot of a company's webpage using GPT to gather insights. ]
+
+# Take a snapshot of the specified webpage.
+"screenshot": =Request("img", "https://customer.io/"<screenshot_url>)
+
+# Upload the captured screenshot to cloud storage
+"storage": =Storage("upload")
+
+# Parse the raw analysis response from GPT
+"extract_raw": =Parser("$..raw")
+
+# Define the input details including company name, page type, instructions, and screenshot URL
+"prompt_args": =Object({
+  "company_name": "Customer.io"<company_name>,
+  "page_type": "Current home page"<page_description>,
+  "instructions": "Determine if this company offers sales demos."<gpt_instructions>,
+  "screenshot_url": "{{ storage.result.variants[0] | replace: 'optimized', 'original' }}"
+})
+
+# Construct the prompt for GPT, passing the image URL and other details
+"prompt": =Object({
+  "prompts": [
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "Based on this screenshot of {{ prompt_args.company_name }}'s {{ prompt_args.page_type }}, {{ prompt_args.instructions }}."},
+        {"type": "image_url", "image_url": {"url": "{{ prompt_args.screenshot_url }}"}}
+      ]
+    }
+  ]
+})
+
+# Use GPT to analyze the image and generate a response. Choose your preferred model.
+"vision": =Ai("gpt-4o"<model>)
+
+# Define configuration settings for the request
+"config": =Object({
+  "cache_duration": 86400
+})
+
+"screenshot" -> "storage"
+"storage" -> "prompt_args"
+"prompt_args" -> "prompt"
+"prompt" -> "vision"
+"vision" -> "extract_raw"
+"config" -> "screenshot"

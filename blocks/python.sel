@@ -1,0 +1,10 @@
+#!/usesummit/sel/0.1a
+# [ Python //  Code block for Python. ]
+
+# Printed objects and statements will be the output of this block.
+"python_stdout": =Code(```python
+
+# Some riveting code here that moves mountains.
+print ("Hello, World!")
+
+```)

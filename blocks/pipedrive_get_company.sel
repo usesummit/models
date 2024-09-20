@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [ Pipedrive: Get Company // Fetch a company record from Pipedrive using your authorized connection. ]
+
+# Properties to retrieve for a company.
+"get_config": =Object({
+ "record_id": 987654321,
+ "params": {
+ "fields": "name,owner_id,address,phone,add_time,update_time"
+ }
+})
+
+# Call to Pipedrive to retrieve the company (organization).
+"company": =Proxy("pipedrive", ["GET", "/v1/organizations/{{ get_config.record_id }}"])
+
+"get_config" -> "company"

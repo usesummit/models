@@ -1,0 +1,17 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot: Update Company // Update a company record in HubSpot using your authorized connection. ]
+
+# Updated attributes.
+"update_config": =Object({
+  "record_id": 123456789,
+  "data": {
+    "properties": {
+      "name": "Gotham Enterprises"
+    }
+  }
+})
+
+# Call to HubSpot to update the company.
+"company": =Proxy("hubspot", ["PATCH", "/crm/v3/objects/companies/{{ update_config.record_id }}"])
+
+"update_config" -> "company"

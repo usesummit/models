@@ -1,0 +1,15 @@
+#!/usesummit/sel/0.1a
+# [Salesforce: Update Account // Update an account record in Salesforce using your authorized connection.]
+
+# Updated attributes.
+"update_config": =Object({
+ "record_id": "001xx000003DHPdAAO",  # Salesforce Account ID
+ "data": {
+   "Name": "Gotham Enterprises"
+ }
+})
+
+# Call to Salesforce to update the account. Replace vXX.X with the actual Salesforce API version, such as v57.0.
+"account": =Proxy("salesforce", ["PATCH", "/services/data/vXX.X/sobjects/Account/{{ update_config.record_id }}"])
+
+"update_config" -> "account"

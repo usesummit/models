@@ -1,0 +1,22 @@
+#!/usesummit/sel/0.1a
+# [ Search-enriched Content Generator // Search the web to retrieve real-time information to enrich a prompt before running GPT. ]
+
+# Filters the output of the `gpt` event for the last raw output.
+"parser": =Parser("$..raw[-1:]")
+
+#
+"prompt": =String("Why do people love Austin, TX?  Be concise, this needs to fit into a couple of tweets."<prompt>)
+
+# This provides GPT with the context it needs to run.  Notice the search results are injected into the prompt using {{ liquid_syntax }}.
+"gpt_input": =Object({"cache_duration": 600, "prompts": [{"role": "user", "content": "{{ prompt }} Please consider these search results: {{ search_results.answer | strip_newlines | escape }}"}]})
+
+# Calls GPT with the enriched prompt passed in. Choose your model and reference a key stored in your account Vault.
+"gpt": =Ai("gpt-4o"<model>)
+
+#
+"search_results": =Search("What are the best restaurants in Austin, TX right now?"<search_query>)
+
+"prompt" -> "gpt_input"
+"gpt_input" -> "gpt"
+"gpt" -> "parser"
+"search_results" -> "prompt"

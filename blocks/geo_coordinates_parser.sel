@@ -1,0 +1,23 @@
+#!/usesummit/sel/0.1a
+# [ Geo Coordinates Parser // Extract latitude and longitude from a comma-separated string. ]
+
+# Create a text object with a string containing latitude and longitude.
+"coordinates_string": =String("40.7128,-74.0060"<lat_lon>)
+
+# Find and extract the latitude and longitude from the string.
+"coordinates_extractor": =Matches("-?\d+\.\d+")
+
+# Parse out the first decimal coordinate.
+"latitude": =Parser('$[0]')
+
+# Parse out the second decimal coordinate.
+"longitude": =Parser('$[1]')
+
+# Use the coordinates string to extract the values.
+"coordinates_string" -> "coordinates_extractor"
+
+# Use the extracted coordinates to get the latitude.
+"coordinates_extractor" -> "latitude"
+
+# Use the extracted coordinates to get the longitude.
+"coordinates_extractor" -> "longitude"

@@ -1,0 +1,21 @@
+#!/usesummit/sel/0.1a
+# [ HubSpot: Update Deal // Update a deal record in HubSpot using your authorized connection. ]
+
+# Updated attributes for the deal.
+"update_config": =Object({
+  "record_id": 987654321,
+  "data": {
+    "properties": {
+      "dealname": "Wayne Enterprises Purchase",
+      "amount": 1000000,
+      "dealstage": "closedwon",
+      "closedate": "{{ 'now' | date: '%Y-%m-%d' }}",
+      "pipeline": "default"
+    }
+  }
+})
+
+# Call to HubSpot to update the deal.
+"deal": =Proxy("hubspot", ["PATCH", "/crm/v3/objects/deals/{{ update_config.record_id }}"])
+
+"update_config" -> "deal"

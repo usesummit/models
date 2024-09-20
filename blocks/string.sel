@@ -1,0 +1,6 @@
+#!/usesummit/sel/0.1a
+# [ String // Stores and relays a text string to downstream events. ]
+
+
+# Enter a text string to relay to an event downstream. A string event will also report its value in the ledger as the length of its contents.
+"string": =String("The bicycle of the mind"<string_value>)

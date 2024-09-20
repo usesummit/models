@@ -1,0 +1,19 @@
+#!/usesummit/sel/0.1a
+# [ Pipedrive: Update Deal // Update a deal record in Pipedrive using your authorized connection. ]
+
+# Updated attributes for the deal.
+"update_config": =Object({
+ "record_id": 987654321,
+ "data": {
+ "title": "Wayne Enterprises Purchase",
+ "value": 1000000,
+ "status": "won",   # Equivalent to "closedwon" in Pipedrive
+ "close_date": "{{ 'now' | date: '%Y-%m-%d' }}",
+ "pipeline_id": 1   # Specify pipeline ID, 'default' replaced with an actual pipeline ID
+ }
+})
+
+# Call to Pipedrive to update the deal.
+"deal": =Proxy("pipedrive", ["PUT", "/v1/deals/{{ update_config.record_id }}"])
+
+"update_config" -> "deal"

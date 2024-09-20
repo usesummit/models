@@ -1,0 +1,22 @@
+#!/usesummit/sel/0.1a
+# [ Glide Big Table Connector // Fetch data from a Glide Big Table by providing connection credentials. ]
+
+
+# Connection authorization.  Requires a "table secret" stored in your vault as GBT_SECRET_TOKEN.
+"auth": =Object({"cache_duration": 0,
+  "headers": {"Authorization" : "Bearer {{ GBT_SECRET_TOKEN }}"}, 
+  "json": {"appID": "eI9g0vdq6eZ0z16md52E"<app_id>, "queries": [{"sql": "SELECT * FROM \"{{ table_id }}\""}]}
+})
+
+# Convert Glide Big Table into an in-memory SQLite table.
+"glide_t": =Table("glide", ["{{ table_id }}", "my_table"<table_name>])
+
+# Query to fetch data out of the in-memory data table.
+"select_all": =Query("SELECT * FROM my_table")
+
+# Unique table_id for the Glide Big Table.
+"table_id": =String("native-table-c40bc24b-9a45-4173-a551-00fe6fa0a417"<table_id>)
+
+"auth" -> "glide_t"
+"glide_t" -> "select_all"
+"table_id" -> "auth"

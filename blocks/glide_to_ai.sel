@@ -1,0 +1,54 @@
+#!/usesummit/sel/0.1a
+# [ Glide Big Table to LLM // Enrich a prompt using data from a Glide Big Table query. ]
+
+
+# Instructions or question you want the LLM to answer about the data.
+"prompt_input": =String("What can you tell us about our order history?  Be concise and summarize it."<prompt>)
+
+# This provides the LLM with the context it needs to run.  Notice the enrichments using {{ liquid_syntax }}.
+"gpt_args": =Object({"cache_duration": 0, "prompts": [{"role": "user", "content": "{{ prompt_input }}. Here's the data: {{ compact_data | json_safe }}."}]})
+
+# Connection authorization. Requires a "table secret" stored in your vault as GBT_SECRET_TOKEN.
+"auth": =Object({"cache_duration": 0,
+  "headers": {"Authorization" : "Bearer {{ GBT_SECRET_TOKEN }}"<gbt_secret_token>},
+  "json": {"appID": "eI9g0vdq6eZ0z16md52E"<app_id>, "queries": [{"sql": "SELECT * FROM \"{{ table_id }}\""}]}
+})
+
+# Converts Glide Big Table into an in-memory SQLite table.
+"glide_t": =Table("glide", ["{{ table_id }}", "my_table"])
+
+# To compose a block of text.
+"compact_data": =Text("""{% assign first_item = select_all[0] %}
+{% capture csv_header %}
+{% for pair in first_item %}
+{{ pair[0] }}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+{% endcapture %}
+{% assign csv_output = csv_header | strip_newlines %}
+{% for item in select_all %}
+{% capture csv_row %}
+{% for pair in item %}
+{{ pair[1] | replace: ',', '' }}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+{% endcapture %}
+{% assign csv_output = csv_output | append: "\n" | append: csv_row | strip_newlines %}
+{% endfor %}
+{{ csv_output }}
+""")
+
+# Calls the LLM with the enriched prompt passed in.
+"llm": =Ai("gpt-4o"<model>)
+
+# Unique table_id for the Glide Big Table.
+"table_id": =String("native-table-c40bc24b-9a45-4173-a551-00fe6fa0a417"<table_id>)
+
+# Query to fetch data out of the in-memory data table.
+"select_all": =Query("SELECT * FROM my_table")
+
+"prompt_input" -> "gpt_args"
+"gpt_args" -> "llm"
+"auth" -> "glide_t"
+"glide_t" -> "select_all"
+"compact_data" -> "gpt_args"
+"table_id" -> "auth"
+"select_all" -> "compact_data"
