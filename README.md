@@ -59,6 +59,5 @@ Some features of the language are not yet supported in `.sel` notation.  Namely:
 We are still very much in the alpha phase.  The most useful things at the moment:
 
 - Request access to Summit at usesummit.com and let us know you'd like to contribute
-- Use "Create with AI" to create models, then test them and place them here for others.
-- [Sponsor this project](https://github.com/sponsors/usesummit)!  This repo is free and we have a generous free tier.  Lets keep it that way.
+- [Sponsor this project](https://github.com/sponsors/usesummit)!
 
