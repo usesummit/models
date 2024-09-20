@@ -1,28 +1,23 @@
 # Summit Models
-Because no-code needs open-source libraries.
+Because no-code/low-code needs open-source libraries!
 
 Models can be imported into Summit as plaintext [using the import feature](https://usesummit.com/e/boards/import).
 
-## How model files are organized
-Since models are often shaped with a specific data source in mind (ex. a CRM, a billing processor), models are organized around the data source, if one exists, for example `hubspot`.  Models that work with a variety of data sources and generic file formats like CSV are stored under `agnostic`.  
-
-All of the models that are offered as by clicking `+ Add New` in the Summit IDE are listed under `plugins`.
-
 ## Preface
-This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We recently began the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute, such as our **dedicated GPT's for learning SEL** [data scripting](https://chat.openai.com/g/g-YpIHKpk8j-summit-event-language-data-scripting) and [simulations](https://chat.openai.com/g/g-CErkEZwxr-summit-event-language-simulations).
+This repo hosts models built using Summit Event Language (SEL), which can be uploaded/imported to [Summit](https://usesummit.com).  We recently began the work of turning SEL into a text-based language.  Editing SEL without needing to use the IDE hosted at usesummit.com is the first step, as it broadens access, makes SEL faster to write, and opens up opportunities for AI to contribute, such as our **[GPT for learning SEL](https://summit.readme.io/docs/chatgpt-instructors)**.
 
-Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous free tier to allow personal use, and business use within limits.  One source of inspiration for our commercialization efforts is [dbt labs](https://github.com/dbt-labs/dbt-core).
+Our short-term plan is to still require use of the interpreter we host at usesummit.com in order to run these models, while offering a generous pay-as-you-go tier for no-code/low-code makers.
 
 If you're reading this, you likely either work at Summit or you are a close friend or supporter.  Thanks for being here!  We still have a lot to do.
 
-If you're wondering why SEL exists at all, [this page does a good job of explaining](https://summit.readme.io/docs/what-it-is-why).
+You are **strongly encouraged to read our docs on [learning Summit](https://summit.readme.io/docs/preface)!**
 
 ## How SEL models work & limitations
 
 ### What really is SEL?
 SEL is a declarative langage (hence all the `=` signs) that allows makers to chain together building blocks ("events") using arrows `->` called "routes".  As an abstraction of Python, it removes a lot of the heavy-lifting and tedium -- the hurdles that rob the joy out of coding a tiny script, plugin, or extension that creates value. SEL solves this by being a quick, fun, powerful, and complementary tool to platforms like Make, Zapier, and Glide.
 
-AI doesn't make this benefit obsolete, because [AI can also generate SEL](https://github.com/usesummit/models/blob/main/sel_training.txt), a feature built in to the platform we host at Summit.  By being more compact, SEL is less likely to contain errors and faster to generate than its equivalent function in JavaScript, Python, et al.
+To learn more, [this page does a good job of explaining](https://summit.readme.io/docs/what-is-summit).
 
 ### Orientation
 What you see in Summit when you build and host a model is an interface (canvas-based IDE) to create and connect the expressions of a model.
