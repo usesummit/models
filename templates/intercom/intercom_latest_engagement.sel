@@ -1,0 +1,46 @@
+#!/usesummit/sel/0.1a
+# [  Intercom Latest Engagement Data  // Prompt: "show me the latest engagement data for a contact in intercom" ]
+# 
+# ### Model Workflow Overview
+# 
+# 1. **Initialization**: The model begins by creating a JSON object in `contacts_query` which specifies the query based on the email address of the contact.
+# 
+# 2. **Search Request**: Utilizing Intercom's integrated Proxy service, `contacts_search` sends the query to search for contacts that match the specified email.
+# 
+# 3. **Data Parsing**:
+#    - `extract_last_seen` uses a parser to extract the `last_seen_at` timestamp from the results of the `contacts_search`.
+#    - `extract_last_replied` extracts the `last_replied_at` timestamp.
+#    - `extract_last_opened` extracts the `last_opened_at` timestamp.
+# 
+# 4. **Data Response**:
+#    - Each extracted timestamp is then individually assigned to a corresponding response attribute (`last_seen`, `last_replied_at`, `last_opened`). These attributes will be part of the API's output, organized under the `engagement_data` object.
+# 
+# 5. **Routing**: The events are coordinated in a series of routes to ensure proper sequence and dependencies are met for data processing.
+#     - `contacts_query` is connected to `contacts_search` to use its output as an input.
+#     - `contacts_search` serves as a common upstream event for the three parsers (`extract_last_seen`, `extract_last_replied`, `extract_last_opened`).
+#     - Each parser is linked to its corresponding response event, contributing to the final JSON response.
+# 
+
+"contacts_query": =Object({"data": {"query": {"field": "email", "operator": "=", "value": "matt@usesummit.com"<email>}}})
+
+"contacts_search": =Proxy("intercom", ["POST", "/contacts/search"])
+
+"extract_last_seen": =Parser("$..last_seen_at")
+
+"last_seen": =Response("engagement_data.last_seen_at")
+
+"extract_last_replied": =Parser("$..last_replied_at")
+
+"last_replied_at": =Response("engagement_data.last_replied_at")
+
+"extract_last_opened": =Parser("$..last_opened_at")
+
+"last_opened": =Response("engagement_data.last_opened_at")
+
+"contacts_query" -> "contacts_search"
+"contacts_search" -> "extract_last_seen"
+"contacts_search" -> "extract_last_replied"
+"contacts_search" -> "extract_last_opened"
+"extract_last_seen" -> "last_seen"
+"extract_last_replied" -> "last_replied_at"
+"extract_last_opened" -> "last_opened"
