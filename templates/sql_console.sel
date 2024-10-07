@@ -1,0 +1,122 @@
+#!/usesummit/sel/0.1a
+# [ SQL Console // Run SQL statements to view the data in your Summit DB. ]
+
+# Connection to database.
+"db": =Storage("database")
+
+# Only proceed if results exist.
+"results_exist": =Iff({{ db|length }})
+
+# Header and skeleton for the HTML page.
+"empty_html": =Text("""
+<html>
+  <head>
+    <title>Query Results</title>
+     <!-- Includes all JS & CSS for the JavaScript Data Grid -->
+     <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+     <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 m-8">
+    <h1 class="text-xl mb-6">Results ({{ db|length }})</h1>
+    {{ db }}
+  </body>
+</html>
+""")
+
+# Compose the output of your model response data as HTML.
+"html_response": =Response("html")
+
+# Grid container.
+"grid_html": =Text("""
+   <!-- Your Data Grid container -->
+   <div id="myGrid" class="ag-theme-quartz" class="mt-6" style="height: 700px;"></div>
+""")
+
+# Proceed if no results exist.
+"no_results": =Niff({{ db|length }})
+
+# To compose a block of text.
+"csv": =Text("""{% as_csv db %}""")
+
+# Compose the output of your model response data as a .CSV file.
+"csv_response": =Response("csv")
+
+# SQL query to run.
+"select": =Query("""
+UPDATE tasks SET schedule_expression = '0 * * * *' where schedule_expression = '*/5 * * * *'
+""")
+
+# To compose a block of text.
+"html": =Text("""
+<html>
+  <head>
+    <title>Query Results</title>
+    <a href="https://usesummit.com/venntechnologycom-zauqj/k2/405326/sql-console/csv/?api_key=400a788e03bfe61a62df">Download CSV</a>
+     <!-- Includes all JS & CSS for the JavaScript Data Grid -->
+     <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+     <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 m-8">
+    <h1 class="text-xl mb-6">Results ({{ db|length }})</h1>
+    {{ grid_html }}
+    {{ grid_js }}
+  </body>
+</html>
+""")
+
+# JavaScript for table.
+"grid_js": =Text("""
+    <script>
+    // Helper function to cast values
+    function castValue(value) {
+      // Check if value is a number (int or float)
+      if (!isNaN(value) && value.trim() !== '') {
+        return parseFloat(value);  // Cast to number
+      } else {
+        return value;  // Keep as string
+      }
+    }
+    const dbData = [
+      {% for contact in db %}
+        {
+          {% for key, value in contact.items %}
+          "{{ key }}": castValue("{{ value|stringformat:"s"|escapejs }}"){% if not forloop.last %},{% endif %}
+          {% endfor %}
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
+    // Dynamically generate column definitions based on the keys in the first record
+    const columnDefs = dbData.length > 0
+      ? Object.keys(dbData[0]).map(key => ({
+          field: key,
+          headerName: key.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase()), // Format the header
+          filter: true
+        }))
+      : [];
+    // Inject the rowData and columnDefs into the gridOptions
+    const gridOptions = {
+      rowData: dbData,  // Using only the data from the db
+      columnDefs: columnDefs
+    };
+    // Your Javascript code to create the Data Grid
+    const myGridElement = document.querySelector('#myGrid');
+    agGrid.createGrid(myGridElement, gridOptions);
+    // Grid Options: Contains all of the Data Grid configurations
+  </script>
+""")
+
+# Compose the output of your model response data as JSON.
+"json_response": =Response("output")
+
+"db" -> "results_exist"
+"db" -> "no_results"
+"db" -> "json_response"
+"results_exist" -> "grid_html"
+"results_exist" -> "csv"
+"empty_html" -> "html_response"
+"grid_html" -> "grid_js"
+"no_results" -> "empty_html"
+"csv" -> "csv_response"
+"select" -> "db"
+"html" -> "html_response"
+"grid_js" -> "html"
