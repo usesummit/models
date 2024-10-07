@@ -1,0 +1,22 @@
+#!/usesummit/sel/0.1a
+# [ Load from Google Sheet // Pull existing data set from a Google Sheet to load our Summit DB table. ]
+
+# Temporarily, the remote CSV will become an in-memory SQLite table.
+"table": =Table("https://docs.google.com/spreadsheets/d/e/2PACX-1vQrO-bes_OrVYJvY6SW3ltlIlXz2yKxj7sQCEQg0ey3lDHPKQnXkL8t8GFNprs3r6cjMcbq-TZHZsRw/pub?gid=630409511&single=true&output=csv")
+
+# A query to run on the table.
+"query": =Query("SELECT * FROM $table")
+
+# This creates a list of objects for storage.
+"bulk_insert": =Object({"action": "create", "instance": {{ query | as_json }}})
+
+# Use the `restaurants` table as the target.
+"restaurants": =Storage("restaurants")
+
+# Compose the output of your model response data as JSON.
+"json_response": =Response("output")
+
+"table" -> "query"
+"query" -> "bulk_insert"
+"bulk_insert" -> "restaurants"
+"restaurants" -> "json_response"
