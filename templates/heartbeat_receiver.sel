@@ -1,0 +1,27 @@
+#!/usesummit/sel/0.1a
+# [ Heartbeat Receiver // Catch a pulse from an external service. ]
+
+# Store this beat in the `automation_heartbeats` table.
+"db": =Storage("automation_heartbeats")
+
+# Report this out. 
+"new_beat": =Response("heartbeat")
+
+# Simple action to create the beat as an object for storage.
+"beat": =Object({
+  "action": "create", 
+  "instance": {
+	"service_name": "Zapier"<service_name>,
+	"automation_name": "Inbound Lead Capture Form"<workflow_name>,
+    "involved_services": "Make"<workflow_services>,
+    "event_id": "12345"<heartbeat_id>,
+    "external_service_url": "www.zapier.com/zaps/1234567"<external_url>    
+  }
+})
+
+# Emit this as a message in our logs.
+"log": =Log("{{ beat | safe }}")
+
+"db" -> "new_beat"
+"beat" -> "log"
+"beat" -> "db"
